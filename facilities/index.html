@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>İmkanlar | HisarFitCamp</title>
+    <meta name="description" content="Konaklama, yemek ve aktivite alanlarımız hakkında bilgi alın.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="app">
+        <div id="header-placeholder"></div>
+        <main id="facilities-page">
+            <section class="section text-center"
+                style="background: var(--gradient-hero); padding: var(--spacing-lg) 0;">
+                <div class="container">
+                    <h1>Kamp İmkanları</h1>
+                    <p>Doğanın kalbinde konforlu ve huzurlu bir ortam.</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="container">
+                    <div class="grid-layout"
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--spacing-md);">
+                        <!-- Konaklama Card -->
+                        <div class="card scroll-fade">
+                            <h3 class="text-primary">Konaklama</h3>
+                            <p>Doğal malzemelerle tasarlanmış bungalovlar ve çadır alanları. Temiz, ferah ve doğayla iç
+                                içe bir uyku deneyimi.</p>
+                            <a href="/konaklama/" class="btn btn-secondary"
+                                style="margin-top: var(--spacing-sm); padding: 8px 16px; font-size: 0.9rem; border-radius: var(--radius-full);">Detaylı
+                                bilgi</a>
+                        </div>
+
+                        <!-- Yemek Card -->
+                        <div class="card scroll-fade">
+                            <h3 class="text-primary">Yemek</h3>
+                            <p>Günde 3 öğün sağlıklı, taze ve yerel ürünlerle hazırlanan yemekler. Vegan ve vejetaryen
+                                seçenekler mevcuttur.</p>
+                        </div>
+
+                        <!-- Eğitim Alanları Card -->
+                        <div class="card scroll-fade">
+                            <h3 class="text-primary">Eğitim Alanları</h3>
+                            <p>Geniş yoga platformu, açık hava spor alanı ve orman içi yürüyüş parkurları. Grup dersleri
+                                ve bireysel çalışmalar için ideal sessiz köşeler.</p>
+                        </div>
+                    </div>
+
+                    <div class="text-center" style="margin-top: var(--spacing-lg);">
+                        <a href="/form/" class="btn btn-primary">Rezervasyon Yap</a>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <div id="footer-placeholder"></div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>İletişim | HisarFitCamp</title>
+    <meta name="description" content="Bize ulaşın.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="app">
+        <div id="header-placeholder"></div>
+        <main id="contact-page">
+            <section class="section text-center" style="background: var(--gradient-hero);">
+                <div class="container">
+                    <h1>İletişim</h1>
+                    <p>Sorularınız için bizimle iletişime geçin.</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="container">
+                    <div class="contact-grid"
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--spacing-lg);">
+                        <div class="card text-center">
+                            <h3 class="text-primary">İletişim Bilgileri</h3>
+                            <div style="margin-top: var(--spacing-md); text-align: left; padding: 0 var(--spacing-md);">
+                                <p style="margin-bottom: var(--spacing-sm);"><strong>Telefon:</strong> +90 555 123 45 67
+                                </p>
+                                <p style="margin-bottom: var(--spacing-sm);"><strong>E-posta:</strong>
+                                    info@hisarfitcamp.com</p>
+                                <p style="margin-bottom: var(--spacing-sm);"><strong>Adres:</strong> Hisar Köyü, Doğa
+                                    Yolu No: 12, İstanbul</p>
+                                <a href="https://wa.me/905551234567" target="_blank" class="btn btn-primary"
+                                    style="margin-top: var(--spacing-sm); width: 100%; text-align: center;">WhatsApp'tan
+                                    Yazın</a>
+                            </div>
+                        </div>
+
+                        <div class="card" style="padding: 0; overflow: hidden; height: 300px;">
+                            <!-- Map Placeholder -->
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3008.9633698339308!2d29.0963!3d41.1122!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDHCsDA2JzQzLjkiTiAyOcKwMDUnNDYuNyJF!5e0!3m2!1sen!2str!4v1625000000000!5m2!1sen!2str"
+                                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        </div>
+                    </div>
+
+                    <div class="text-center" style="margin-top: var(--spacing-xl);">
+                        <a href="/form/" class="btn btn-primary">Kampa Katılmak İçin Formu Doldur</a>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <div id="footer-placeholder"></div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eğitmenler | HisarFitCamp</title>
+    <meta name="description" content="Uzman eğitmen kadromuzla tanışın.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="app">
+        <div id="header-placeholder"></div>
+        <main id="team-page">
+            <section class="section text-center" style="background: var(--gradient-hero);">
+                <div class="container">
+                    <h1>Eğitmenlerimiz</h1>
+                    <p>Alanında uzman, enerjisi yüksek rehberlerimizle tanışın.</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="container">
+                    <div class="team-grid"
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--spacing-lg);">
+                        <!-- Instructor 1 -->
+                        <div class="card text-center">
+                            <div class="instructor-photo"
+                                style="width: 120px; height: 120px; background-color: #ddd; border-radius: 50%; margin: 0 auto var(--spacing-md); background-image: url('https://placehold.co/120x120/4CAF50/FFFFFF?text=EY'); background-size: cover;">
+                            </div>
+                            <h3 class="text-primary">Elif Yılmaz</h3>
+                            <p
+                                style="font-weight: 600; color: var(--color-text-light); margin-bottom: var(--spacing-xs);">
+                                Yoga & Nefes Eğitmeni</p>
+                            <p style="font-size: 0.9rem; margin-bottom: var(--spacing-sm);">10 yıllık deneyim. Hatha ve
+                                Vinyasa Yoga uzmanı. Nefes terapisi ile zihinsel dinginlik sağlıyor.</p>
+                            <p style="font-size: 0.85rem; color: var(--color-primary);">Verdiği Seanslar: Sabah Yoga,
+                                Nefes Atölyesi</p>
+                        </div>
+
+                        <!-- Instructor 2 -->
+                        <div class="card text-center">
+                            <div class="instructor-photo"
+                                style="width: 120px; height: 120px; background-color: #ddd; border-radius: 50%; margin: 0 auto var(--spacing-md); background-image: url('https://placehold.co/120x120/B2EBF2/333333?text=MD'); background-size: cover;">
+                            </div>
+                            <h3 class="text-primary">Mert Demir</h3>
+                            <p
+                                style="font-weight: 600; color: var(--color-text-light); margin-bottom: var(--spacing-xs);">
+                                Fitness & Kondisyon Koçu</p>
+                            <p style="font-size: 0.9rem; margin-bottom: var(--spacing-sm);">Spor Bilimleri mezunu.
+                                Fonksiyonel antrenman ve HIIT konusunda uzmanlaşmış.</p>
+                            <p style="font-size: 0.85rem; color: var(--color-primary);">Verdiği Seanslar: Sabah Sporu,
+                                Doğa Yürüyüşü</p>
+                        </div>
+
+                        <!-- Instructor 3 -->
+                        <div class="card text-center">
+                            <div class="instructor-photo"
+                                style="width: 120px; height: 120px; background-color: #ddd; border-radius: 50%; margin: 0 auto var(--spacing-md); background-image: url('https://placehold.co/120x120/81C784/FFFFFF?text=SK'); background-size: cover;">
+                            </div>
+                            <h3 class="text-primary">Selin Kaya</h3>
+                            <p
+                                style="font-weight: 600; color: var(--color-text-light); margin-bottom: var(--spacing-xs);">
+                                Mindfulness & Meditasyon</p>
+                            <p style="font-size: 0.9rem; margin-bottom: var(--spacing-sm);">Psikolog ve Mindfulness
+                                eğitmeni. Zihin-beden bağlantısı üzerine çalışmalar yürütüyor.</p>
+                            <p style="font-size: 0.85rem; color: var(--color-primary);">Verdiği Seanslar: Mind-Body
+                                Atölyesi, Kapanış Çemberi</p>
+                        </div>
+                    </div>
+
+                    <div class="text-center" style="margin-top: var(--spacing-xl);">
+                        <a href="/form/" class="btn btn-primary">Kampa Katılmak İçin Formu Doldur</a>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <div id="footer-placeholder"></div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>

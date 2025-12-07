@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Başvuru Formu | HisarFitCamp</title>
+    <meta name="description" content="Kampa katılmak için formu doldurun.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="app">
+        <div id="header-placeholder"></div>
+        <main id="form-page">
+            <section class="section text-center" style="background: var(--gradient-hero);">
+                <div class="container">
+                    <h1>Başvuru Formu</h1>
+                    <p>Sınırlı kontenjan için yerinizi ayırtın.</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="container" style="max-width: 600px;">
+                    <form id="application-form" class="card" style="border-top: 4px solid var(--color-primary);">
+                        <div style="margin-bottom: var(--spacing-sm);">
+                            <label for="name" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Ad
+                                Soyad</label>
+                            <input type="text" id="name" name="name" required
+                                style="width: 100%; padding: 10px; border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-family: inherit;">
+                        </div>
+
+                        <div style="margin-bottom: var(--spacing-sm);">
+                            <label for="phone"
+                                style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Telefon</label>
+                            <input type="tel" id="phone" name="phone" required
+                                style="width: 100%; padding: 10px; border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-family: inherit;">
+                        </div>
+
+                        <div style="margin-bottom: var(--spacing-sm);">
+                            <label for="email"
+                                style="display: block; margin-bottom: 0.5rem; font-weight: 600;">E-posta</label>
+                            <input type="email" id="email" name="email" required
+                                style="width: 100%; padding: 10px; border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-family: inherit;">
+                        </div>
+
+                        <div style="margin-bottom: var(--spacing-sm);">
+                            <label for="date" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Katılmak
+                                İstediğiniz Tarih</label>
+                            <select id="date" name="date" required
+                                style="width: 100%; padding: 10px; border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-family: inherit;">
+                                <option value="">Tarih Seçiniz</option>
+                                <option value="15-17 Haziran">15-17 Haziran</option>
+                                <option value="22-24 Haziran">22-24 Haziran</option>
+                                <option value="6-8 Temmuz">6-8 Temmuz</option>
+                            </select>
+                        </div>
+
+                        <div style="margin-bottom: var(--spacing-sm);">
+                            <label for="notes" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Not /
+                                Eklemek İstedikleriniz</label>
+                            <textarea id="notes" name="notes" rows="4"
+                                style="width: 100%; padding: 10px; border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-family: inherit;"></textarea>
+                        </div>
+
+                        <div style="margin-bottom: var(--spacing-md); display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="checkbox" id="kvkk" name="kvkk" required>
+                            <label for="kvkk" style="font-size: 0.9rem;">KVKK metnini okudum ve onaylıyorum.</label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Gönder</button>
+                    </form>
+
+                    <div id="success-message" class="card text-center"
+                        style="display: none; border-top: 4px solid var(--color-primary);">
+                        <h3 class="text-primary" style="margin-bottom: var(--spacing-sm);">Teşekkürler!</h3>
+                        <p>Ekibimiz kısa süre içinde sizi arayarak ödeme ve detaylar hakkında bilgilendirecektir.</p>
+                        <a href="/" class="btn btn-secondary mt-4" style="margin-top: var(--spacing-md);">Ana Sayfaya
+                            Dön</a>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <div id="footer-placeholder"></div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+    <!DOCTYPE html>
+    <html lang="tr">
+
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Başvuru Formu | HisarFitCamp</title>
+        <meta name="description" content="Kampa katılmak için formu doldurun.">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+            rel="stylesheet">
+    </head>
+
+    <body>
+        <div id="app">
+            <div id="header-placeholder"></div>
+            <main id="form-page">
+                <section class="section text-center" style="background: var(--gradient-hero);">
+                    <div class="container">
+                        <h1>Başvuru Formu</h1>
+                        <p>Sınırlı kontenjan için yerinizi ayırtın.</p>
+                    </div>
+                </section>
+
+                <section class="section">
+                    <div class="container" style="max-width: 600px;">
+                        <form id="application-form" class="card" style="border-top: 4px solid var(--color-primary);">
+                            <div style="margin-bottom: var(--spacing-sm);">
+                                <label for="name" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Ad
+                                    Soyad</label>
+                                <input type="text" id="name" name="name" required
+                                    style="width: 100%; padding: 10px; border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-family: inherit;">
+                            </div>
+
+                            <div style="margin-bottom: var(--spacing-sm);">
+                                <label for="phone"
+                                    style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Telefon</label>
+                                <input type="tel" id="phone" name="phone" required
+                                    style="width: 100%; padding: 10px; border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-family: inherit;">
+                            </div>
+
+                            <div style="margin-bottom: var(--spacing-sm);">
+                                <label for="email"
+                                    style="display: block; margin-bottom: 0.5rem; font-weight: 600;">E-posta</label>
+                                <input type="email" id="email" name="email" required
+                                    style="width: 100%; padding: 10px; border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-family: inherit;">
+                            </div>
+
+                            <div style="margin-bottom: var(--spacing-sm);">
+                                <label for="date"
+                                    style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Katılmak
+                                    İstediğiniz Tarih</label>
+                                <select id="date" name="date" required
+                                    style="width: 100%; padding: 10px; border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-family: inherit;">
+                                    <option value="">Tarih Seçiniz</option>
+                                    <option value="15-17 Haziran">15-17 Haziran</option>
+                                    <option value="22-24 Haziran">22-24 Haziran</option>
+                                    <option value="6-8 Temmuz">6-8 Temmuz</option>
+                                </select>
+                            </div>
+
+                            <div style="margin-bottom: var(--spacing-sm);">
+                                <label for="notes" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Not
+                                    /
+                                    Eklemek İstedikleriniz</label>
+                                <textarea id="notes" name="notes" rows="4"
+                                    style="width: 100%; padding: 10px; border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-family: inherit;"></textarea>
+                            </div>
+
+                            <div
+                                style="margin-bottom: var(--spacing-md); display: flex; align-items: center; gap: 0.5rem;">
+                                <input type="checkbox" id="kvkk" name="kvkk" required>
+                                <label for="kvkk" style="font-size: 0.9rem;">KVKK metnini okudum ve onaylıyorum.</label>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">Gönder</button>
+                        </form>
+
+                        <div id="success-message" class="card text-center"
+                            style="display: none; border-top: 4px solid var(--color-primary);">
+                            <h3 class="text-primary" style="margin-bottom: var(--spacing-sm);">Teşekkürler!</h3>
+                            <p>Ekibimiz kısa süre içinde sizi arayarak ödeme ve detaylar hakkında bilgilendirecektir.
+                            </p>
+                            <a href="/" class="btn btn-secondary mt-4" style="margin-top: var(--spacing-md);">Ana
+                                Sayfaya
+                                Dön</a>
+                        </div>
+                    </div>
+                </section>
+            </main>
+            <div id="footer-placeholder"></div>
+        </div>
+        <script type="module" src="/src/main.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const form = document.getElementById('application-form');
+                const successMessage = document.getElementById('success-message');
+
+                if (form) {
+                    form.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        // Simulate form submission
+                        window.location.href = '/tesekkurler/';
+                    });
+                }
+            });
+        </script>
+    </body>
+
+    </html>
