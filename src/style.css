@@ -333,6 +333,7 @@ h3 {
     padding: var(--spacing-sm);
   }
 }
+
 /* --- Tabs Navigation --- */
 .tabs-nav {
   display: flex;
@@ -390,7 +391,7 @@ h3 {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 30px; 
+  left: 30px;
   width: 2px;
   background: linear-gradient(to bottom, var(--color-primary), var(--color-secondary));
   border-radius: 2px;
@@ -399,13 +400,13 @@ h3 {
 .timeline-item {
   position: relative;
   margin-bottom: var(--spacing-lg);
-  padding-left: 80px; 
+  padding-left: 80px;
 }
 
 /* Dot on the line */
 .timeline-dot {
   position: absolute;
-  left: 21px; 
+  left: 21px;
   top: 0;
   width: 20px;
   height: 20px;
@@ -427,7 +428,7 @@ h3 {
     left: 50%;
     transform: translateX(-50%);
   }
-  
+
   .timeline-item {
     width: 50%;
     padding-left: 0;
@@ -435,19 +436,19 @@ h3 {
     margin-left: 0;
     text-align: right;
   }
-  
+
   .timeline-item:nth-child(even) {
     margin-left: 50%;
     padding-left: 40px;
     padding-right: 0;
     text-align: left;
   }
-  
+
   .timeline-dot {
     left: 50%;
     transform: translateX(-50%);
   }
-  
+
   /* Arrows */
   .timeline-content::after {
     content: '';
@@ -460,7 +461,7 @@ h3 {
     border-bottom: 10px solid transparent;
     border-left: 10px solid var(--color-white);
   }
-  
+
   .timeline-item:nth-child(even) .timeline-content::after {
     left: -10px;
     right: auto;
@@ -491,8 +492,10 @@ h3 {
 
 .timeline-clock {
   font-weight: 700;
-  color: var(--color-secondary); /* This might be invisible against white bg, will check */
-  color: var(--color-primary-light); /* Better visibility */
+  color: var(--color-secondary);
+  /* This might be invisible against white bg, will check */
+  color: var(--color-primary-light);
+  /* Better visibility */
   font-size: 1.1rem;
   display: block;
   margin-bottom: 0.25rem;
@@ -505,9 +508,9 @@ h3 {
 }
 
 .timeline-desc {
-   color: var(--color-text-light);
-   font-size: 0.95rem;
-   line-height: 1.6;
+  color: var(--color-text-light);
+  font-size: 0.95rem;
+  line-height: 1.6;
 }
 
 .timeline-instructor {
@@ -523,21 +526,25 @@ h3 {
   .timeline::before {
     left: 20px;
   }
+
   .timeline-dot {
     left: 11px;
   }
+
   .timeline-item {
     padding-left: 50px;
     width: 100%;
   }
+
   .timeline-content::after {
     left: -10px;
     border-right: 10px solid var(--color-white);
     border-left: none;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
-    top: 15px; 
+    top: 15px;
   }
+
   .timeline-item:nth-child(even) {
     margin-left: 0;
     padding-left: 50px;
@@ -546,3 +553,45 @@ h3 {
   }
 }
 
+/* Program Snippets Grid Layout */
+.program-snippets {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-md);
+  margin: var(--spacing-md) 0;
+  justify-items: center;
+}
+
+.snippet {
+  width: 100%;
+  max-width: 350px;
+  /* Ensure cards don't get too wide on mobile */
+  display: flex;
+  /* Centering content */
+  align-items: center;
+  justify-content: center;
+  min-height: 130px;
+  /* Uniform height */
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+/* Desktop Grid */
+@media (min-width: 900px) {
+  .program-snippets {
+    grid-template-columns: repeat(3, 1fr);
+    align-items: start;
+  }
+
+  .snippet {
+    max-width: none;
+    /* Let grid control width on desktop */
+    height: 100%;
+    /* Fill grid cell */
+  }
+
+  /* Position the 4th item under the 2nd item (center column) */
+  .snippet:nth-child(4) {
+    grid-column: 2;
+  }
+}
