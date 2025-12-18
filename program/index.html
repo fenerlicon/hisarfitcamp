@@ -24,198 +24,376 @@
 
             <section class="section">
                 <div class="container">
-                    <div class="program-days" style="display: grid; gap: var(--spacing-lg);">
+                    <div class="tabs-nav">
+                        <button class="tab-btn active" data-tab="day1">1. GÜN<br><small
+                                style="font-size: 0.7em; opacity: 0.8;">30 Nisan</small></button>
+                        <button class="tab-btn" data-tab="day2">2. GÜN<br><small
+                                style="font-size: 0.7em; opacity: 0.8;">1 Mayıs</small></button>
+                        <button class="tab-btn" data-tab="day3">3. GÜN<br><small
+                                style="font-size: 0.7em; opacity: 0.8;">2 Mayıs</small></button>
+                        <button class="tab-btn" data-tab="day4">4. GÜN<br><small
+                                style="font-size: 0.7em; opacity: 0.8;">3 Mayıs</small></button>
+                    </div>
+
+                    <div class="program-content">
                         <!-- Day 1 -->
-                        <div class="card day-card scroll-fade">
-                            <h2 class="text-primary">📅 30 NİSAN – PERŞEMBE</h2>
-                            <ul
-                                style="margin-top: var(--spacing-sm); padding-left: var(--spacing-md); list-style-type: none;">
-                                <li style="margin-bottom: 1rem;">
-                                    <strong>12.00 – 16.00</strong><br>
-                                    <span style="font-weight: 600;">Check-in & Tanışma</span><br>
-                                    Katılımcı ölçümleri (kan değerleri) yapılır ve kişiye özel takviye önerileri
-                                    sunulur.
-                                </li>
-                                <li style="margin-bottom: 1rem;">
-                                    <strong>16.00 – 17.30</strong><br>
-                                    <span style="font-weight: 600;">Dance Cardio & Vitamin Bar</span><br>
-                                    Etkinlik akışının tanıtımı<br>
-                                    <em>Eğitmen: Nur Kocabaş</em>
-                                </li>
-                                <li style="margin-bottom: 1rem;">
-                                    <strong>17.30 – 18.30</strong><br>
-                                    <span style="font-weight: 600;">Serbest Zaman</span>
-                                </li>
-                                <li style="margin-bottom: 1rem;">
-                                    <strong>19.00 – 20.00</strong><br>
-                                    <span style="font-weight: 600;">Akşam Yemeği</span>
-                                </li>
-                                <li>
-                                    <strong>20.00 – 22.00</strong><br>
-                                    <span style="font-weight: 600;">Ateş Başında Tanışma & Sohbet</span>
-                                </li>
-                            </ul>
+                        <div id="day1" class="tab-content active">
+                            <h2 class="text-center text-primary" style="margin-bottom: var(--spacing-md);">30 NİSAN –
+                                PERŞEMBE</h2>
+                            <div class="timeline">
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">12.00 – 16.00</span>
+                                            <span class="timeline-title">Check-in & Tanışma</span>
+                                        </div>
+                                        <p class="timeline-desc">Katılımcı ölçümleri (kan değerleri) yapılır ve kişiye
+                                            özel takviye önerileri sunulur.</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">16.00 – 17.30</span>
+                                            <span class="timeline-title">Dance Cardio & Vitamin Bar</span>
+                                        </div>
+                                        <p class="timeline-desc">Etkinlik akışının tanıtımı</p>
+                                        <div class="timeline-instructor">Eğitmen: Nur Kocabaş</div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">17.30 – 18.30</span>
+                                            <span class="timeline-title">Serbest Zaman</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">19.00 – 20.00</span>
+                                            <span class="timeline-title">Akşam Yemeği</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">20.00 – 22.00</span>
+                                            <span class="timeline-title">Ateş Başında Tanışma & Sohbet</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Day 2 -->
-                        <div class="card day-card scroll-fade" style="transition-delay: 100ms;">
-                            <h2 class="text-primary">📅 1 MAYIS – CUMA</h2>
-                            <ul
-                                style="margin-top: var(--spacing-sm); padding-left: var(--spacing-md); list-style-type: none;">
-                                <li style="margin-bottom: 1rem;">
-                                    <strong>07.00 – 07.45</strong><br>
-                                    <span style="font-weight: 600;">Sabah Yürüyüşü & Nefes Egzersizi</span><br>
-                                    Açma, germe ve esneme çalışmaları<br>
-                                    <em>Eğitmen: Mehmet Altınok</em>
-                                </li>
-                                <li style="margin-bottom: 1rem;">
-                                    <strong>08.00 – 09.00</strong><br>
-                                    <span style="font-weight: 600;">Kahvaltı</span>
-                                </li>
-                                <li style="margin-bottom: 1rem;">
-                                    <strong>09.15 – 11.00</strong><br>
-                                    <span style="font-weight: 600;">Eğitim: Kilo Kontrolü ve Sağlıklı
-                                        Alışkanlıklar</span><br>
-                                    • Kilo kontrolünde yapılan yaygın hatalar<br>
-                                    • Sıvı tüketiminin önemi
-                                </li>
-                                <li style="margin-bottom: 1rem;">
-                                    <strong>11.00 – 12.00</strong><br>
-                                    <span style="font-weight: 600;">Ara Öğün & İhtiyaç Molası</span>
-                                </li>
-                                <li style="margin-bottom: 1rem;">
-                                    <strong>12.00 – 13.00</strong><br>
-                                    <span style="font-weight: 600;">Workshop: Dengeli Kahvaltı</span><br>
-                                    • Şeker dengesi ve insülin<br>
-                                    • Sağlıklı kahvaltı tabağı<br>
-                                    • Ara öğünlerin önemi
-                                </li>
-                                <li style="margin-bottom: 1rem;">
-                                    <strong>13.00 – 14.00</strong><br>
-                                    <span style="font-weight: 600;">Öğlen Yemeği</span>
-                                </li>
-                                <li style="margin-bottom: 1rem;">
-                                    <strong>14.30</strong><br>
-                                    <span style="font-weight: 600;">Eynal Kaplıcalarına Hareket</span>
-                                </li>
-                                <li style="margin-bottom: 1rem;">
-                                    <strong>15.00 – 16.00</strong><br>
-                                    <span style="font-weight: 600;">Kaynarca Hamam Etkinliği</span>
-                                </li>
-                                <li style="margin-bottom: 1rem;">
-                                    <strong>16.00 – 17.00</strong><br>
-                                    <span style="font-weight: 600;">Ara Öğün & İçecek İkramı</span>
-                                </li>
-                                <li style="margin-bottom: 1rem;">
-                                    <strong>17.00</strong><br>
-                                    <span style="font-weight: 600;">Kamp Alanına Dönüş</span>
-                                </li>
-                                <li style="margin-bottom: 1rem;">
-                                    <strong>17.30 – 19.00</strong><br>
-                                    <span style="font-weight: 600;">Serbest Zaman</span>
-                                </li>
-                                <li style="margin-bottom: 1rem;">
-                                    <strong>19.00 – 20.00</strong><br>
-                                    <span style="font-weight: 600;">Akşam Yemeği</span>
-                                </li>
-                                <li>
-                                    <strong>20.00 – 23.00</strong><br>
-                                    <span style="font-weight: 600;">DJ Performans & After Party</span><br>
-                                    Konsept: Maskeli Kostüm Partisi
-                                </li>
-                            </ul>
+                        <div id="day2" class="tab-content">
+                            <h2 class="text-center text-primary" style="margin-bottom: var(--spacing-md);">1 MAYIS –
+                                CUMA</h2>
+                            <div class="timeline">
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">07.00 – 07.45</span>
+                                            <span class="timeline-title">Sabah Yürüyüşü & Nefes Egzersizi</span>
+                                        </div>
+                                        <p class="timeline-desc">Açma, germe ve esneme çalışmaları</p>
+                                        <div class="timeline-instructor">Eğitmen: Mehmet Altınok</div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">08.00 – 09.00</span>
+                                            <span class="timeline-title">Kahvaltı</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">09.15 – 11.00</span>
+                                            <span class="timeline-title">Eğitim: Kilo Kontrolü ve Sağlıklı
+                                                Alışkanlıklar</span>
+                                        </div>
+                                        <p class="timeline-desc">• Kilo kontrolünde yapılan yaygın hatalar<br>• Sıvı
+                                            tüketiminin önemi</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">11.00 – 12.00</span>
+                                            <span class="timeline-title">Ara Öğün & İhtiyaç Molası</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">12.00 – 13.00</span>
+                                            <span class="timeline-title">Workshop: Dengeli Kahvaltı</span>
+                                        </div>
+                                        <p class="timeline-desc">• Şeker dengesi ve insülin<br>• Sağlıklı kahvaltı
+                                            tabağı<br>• Ara öğünlerin önemi</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">13.00 – 14.00</span>
+                                            <span class="timeline-title">Öğlen Yemeği</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">14.30</span>
+                                            <span class="timeline-title">Eynal Kaplıcalarına Hareket</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">15.00 – 16.00</span>
+                                            <span class="timeline-title">Kaynarca Hamam Etkinliği</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">16.00 – 17.00</span>
+                                            <span class="timeline-title">Ara Öğün & İçecek İkramı</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">17.00</span>
+                                            <span class="timeline-title">Kamp Alanına Dönüş</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">17.30 – 19.00</span>
+                                            <span class="timeline-title">Serbest Zaman</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">19.00 – 20.00</span>
+                                            <span class="timeline-title">Akşam Yemeği</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">20.00 – 23.00</span>
+                                            <span class="timeline-title">DJ Performans & After Party</span>
+                                        </div>
+                                        <p class="timeline-desc">Konsept: Maskeli Kostüm Partisi</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Day 3 -->
-                        <div class="card day-card scroll-fade">
-                            <h2 class="text-primary">📅 2 MAYIS – CUMARTESİ</h2>
-                            <ul
-                                style="margin-top: var(--spacing-sm); padding-left: var(--spacing-md); list-style-type: none;">
-                                <li style="margin-bottom: 1rem;">
-                                    <strong>07.00 – 07.45</strong><br>
-                                    <span style="font-weight: 600;">Dance Cardio & Crunch</span><br>
-                                    <em>Eğitmenler: Nur Kocabaş, Mehmet Altınok</em>
-                                </li>
-                                <li style="margin-bottom: 1rem;">
-                                    <strong>08.00 – 08.45</strong><br>
-                                    <span style="font-weight: 600;">Protein Büfe & Detox Bar</span>
-                                </li>
-                                <li style="margin-bottom: 1rem;">
-                                    <strong>09.00 – 10.30</strong><br>
-                                    <span style="font-weight: 600;">Workshop: Pratik Kahvaltı</span><br>
-                                    • Smoothie, Bowl ve Protein Shake<br>
-                                    • 30-30-30 Beslenme Felsefesi
-                                </li>
-                                <li style="margin-bottom: 1rem;">
-                                    <strong>10.30 – 11.00</strong><br>
-                                    <span style="font-weight: 600;">Ara Öğün Molası</span>
-                                </li>
-                                <li style="margin-bottom: 1rem;">
-                                    <strong>11.00 – 12.30</strong><br>
-                                    <span style="font-weight: 600;">Workshop: Fit Beslenme</span><br>
-                                    • Haftalık öğün planlama<br>
-                                    • Fast food zararları<br>
-                                    • Alternatif ve bilinçli beslenme<br>
-                                    • GDO hakkında bilgiler
-                                </li>
-                                <li style="margin-bottom: 1rem;">
-                                    <strong>12.30 – 13.00</strong><br>
-                                    <span style="font-weight: 600;">Öğlen Yemeği</span>
-                                </li>
-                                <li style="margin-bottom: 1rem;">
-                                    <strong>14.00 – 16.00</strong><br>
-                                    <span style="font-weight: 600;">Sosyal & Eğitsel Oyunlar</span><br>
-                                    Ödüllü grup aktiviteleri ve rekreasyon etkinlikleri
-                                </li>
-                                <li style="margin-bottom: 1rem;">
-                                    <strong>16.00 – 16.30</strong><br>
-                                    <span style="font-weight: 600;">Ara Öğün & İçecek İkramı</span>
-                                </li>
-                                <li style="margin-bottom: 1rem;">
-                                    <strong>16.30 – 19.00</strong><br>
-                                    <span style="font-weight: 600;">Serbest Zaman</span>
-                                </li>
-                                <li style="margin-bottom: 1rem;">
-                                    <strong>19.00 – 20.00</strong><br>
-                                    <span style="font-weight: 600;">Akşam Yemeği</span>
-                                </li>
-                                <li>
-                                    <strong>20.00 – 22.00</strong><br>
-                                    <span style="font-weight: 600;">Canlı Müzik, Eğlence & Çekiliş</span>
-                                </li>
-                            </ul>
+                        <div id="day3" class="tab-content">
+                            <h2 class="text-center text-primary" style="margin-bottom: var(--spacing-md);">2 MAYIS –
+                                CUMARTESİ</h2>
+                            <div class="timeline">
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">07.00 – 07.45</span>
+                                            <span class="timeline-title">Dance Cardio & Crunch</span>
+                                        </div>
+                                        <div class="timeline-instructor">Eğitmenler: Nur Kocabaş, Mehmet Altınok</div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">08.00 – 08.45</span>
+                                            <span class="timeline-title">Protein Büfe & Detox Bar</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">09.00 – 10.30</span>
+                                            <span class="timeline-title">Workshop: Pratik Kahvaltı</span>
+                                        </div>
+                                        <p class="timeline-desc">• Smoothie, Bowl ve Protein Shake<br>• 30-30-30
+                                            Beslenme Felsefesi</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">10.30 – 11.00</span>
+                                            <span class="timeline-title">Ara Öğün Molası</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">11.00 – 12.30</span>
+                                            <span class="timeline-title">Workshop: Fit Beslenme</span>
+                                        </div>
+                                        <p class="timeline-desc">• Haftalık öğün planlama<br>• Fast food zararları<br>•
+                                            Alternatif ve bilinçli beslenme<br>• GDO hakkında bilgiler</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">12.30 – 13.00</span>
+                                            <span class="timeline-title">Öğlen Yemeği</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">14.00 – 16.00</span>
+                                            <span class="timeline-title">Sosyal & Eğitsel Oyunlar</span>
+                                        </div>
+                                        <p class="timeline-desc">Ödüllü grup aktiviteleri ve rekreasyon etkinlikleri</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">16.00 – 16.30</span>
+                                            <span class="timeline-title">Ara Öğün & İçecek İkramı</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">16.30 – 19.00</span>
+                                            <span class="timeline-title">Serbest Zaman</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">19.00 – 20.00</span>
+                                            <span class="timeline-title">Akşam Yemeği</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">20.00 – 22.00</span>
+                                            <span class="timeline-title">Canlı Müzik, Eğlence & Çekiliş</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Day 4 -->
-                        <div class="card day-card scroll-fade" style="transition-delay: 100ms;">
-                            <h2 class="text-primary">📅 3 MAYIS – PAZAR</h2>
-                            <ul
-                                style="margin-top: var(--spacing-sm); padding-left: var(--spacing-md); list-style-type: none;">
-                                <li style="margin-bottom: 1rem;">
-                                    <strong>07.00 – 07.45</strong><br>
-                                    <span style="font-weight: 600;">Doğa Yürüyüşü & Dance Cardio</span>
-                                </li>
-                                <li style="margin-bottom: 1rem;">
-                                    <strong>08.00 – 08.30</strong><br>
-                                    <span style="font-weight: 600;">Protein Büfe & Detox Bar</span>
-                                </li>
-                                <li style="margin-bottom: 1rem;">
-                                    <strong>09.00 – 10.30</strong><br>
-                                    <span style="font-weight: 600;">Eğitim: Beslenme ve Takviyeler</span><br>
-                                    • Vitamin eksiklikleri ve etkileri<br>
-                                    • Takviye gıdaların doğru kullanımı
-                                </li>
-                                <li style="margin-bottom: 1rem;">
-                                    <strong>10.30 – 11.00</strong><br>
-                                    <span style="font-weight: 600;">Ara Öğün Molası</span>
-                                </li>
-                                <li>
-                                    <strong>11.00 – 13.00</strong><br>
-                                    <span style="font-weight: 600;">Sunum: HisarFit Yaklaşımı</span><br>
-                                    • Holistik yaşam modeli<br>
-                                    • Online danışmanlık hizmetleri
-                                </li>
-                            </ul>
+                        <div id="day4" class="tab-content">
+                            <h2 class="text-center text-primary" style="margin-bottom: var(--spacing-md);">3 MAYIS –
+                                PAZAR</h2>
+                            <div class="timeline">
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">07.00 – 07.45</span>
+                                            <span class="timeline-title">Doğa Yürüyüşü & Dance Cardio</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">08.00 – 08.30</span>
+                                            <span class="timeline-title">Protein Büfe & Detox Bar</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">09.00 – 10.30</span>
+                                            <span class="timeline-title">Eğitim: Beslenme ve Takviyeler</span>
+                                        </div>
+                                        <p class="timeline-desc">• Vitamin eksiklikleri ve etkileri<br>• Takviye
+                                            gıdaların doğru kullanımı</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">10.30 – 11.00</span>
+                                            <span class="timeline-title">Ara Öğün Molası</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-dot"></div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-header">
+                                            <span class="timeline-clock">11.00 – 13.00</span>
+                                            <span class="timeline-title">Sunum: HisarFit Yaklaşımı</span>
+                                        </div>
+                                        <p class="timeline-desc">• Holistik yaşam modeli<br>• Online danışmanlık
+                                            hizmetleri</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
