@@ -1,29 +1,36 @@
 :root {
-  /* Colors */
-  --color-primary: #4CAF50;
-  /* Natural Green */
-  --color-primary-dark: #388E3C;
-  --color-secondary: #B2EBF2;
-  /* Baby Blue */
-  --color-secondary-dark: #80DEEA;
+  /* Colors - Premium Nature Palette */
+  --color-primary: #2C5F2D;
+  /* Deep Forest Green */
+  --color-primary-light: #4E8A50;
+  /* Lighter Sage Green */
+  --color-primary-dark: #1B3B1C;
+  /* Darker Green */
+
+  --color-secondary: #EDF7ED;
+  /* Very light green tinted white for backgrounds */
+  --color-accent: #D4A373;
+  /* Earthy Gold/Bronze for subtle highlights */
+
   --color-white: #FFFFFF;
-  --color-bg: #F9F9F9;
-  --color-text: #333333;
-  --color-text-light: #666666;
+  --color-bg: #FAFBFA;
+  /* Clean Off-White */
+  --color-text: #2D3436;
+  /* Softer Black */
+  --color-text-light: #636E72;
   --color-border: #E0E0E0;
 
   /* Gradients */
-  --gradient-hero: linear-gradient(135deg, rgba(178, 235, 242, 0.6) 0%, rgba(76, 175, 80, 0.1) 100%);
-  --gradient-btn: linear-gradient(to right, #4CAF50, #66BB6A);
+  --gradient-hero: linear-gradient(135deg, #1B3B1C 0%, #2C5F2D 100%);
+  /* Solid, rich gradient */
+  --gradient-btn: linear-gradient(to right, #2C5F2D, #4E8A50);
 
   /* Spacing */
   --spacing-xs: 0.5rem;
   --spacing-sm: 1rem;
   --spacing-md: 2rem;
   --spacing-lg: 3.5rem;
-  /* Reduced from 4rem */
   --spacing-xl: 5rem;
-  /* Reduced from 6rem */
 
   /* Border Radius */
   --radius-sm: 8px;
@@ -32,9 +39,10 @@
   --radius-full: 9999px;
 
   /* Shadows */
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-sm: 0 4px 6px rgba(44, 95, 45, 0.05);
+  /* Tinted shadow */
+  --shadow-md: 0 10px 15px rgba(44, 95, 45, 0.1);
+  --shadow-lg: 0 20px 25px rgba(44, 95, 45, 0.15);
 }
 
 * {
@@ -85,6 +93,10 @@ img {
   color: var(--color-primary);
 }
 
+.text-white {
+  color: var(--color-white);
+}
+
 /* Buttons */
 .btn {
   display: inline-block;
@@ -124,14 +136,28 @@ img {
   border-radius: var(--radius-md);
   padding: var(--spacing-md);
   box-shadow: var(--shadow-sm);
-  border: 1px solid transparent;
-  transition: all 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  /* Very subtle border */
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  /* Bouncy premium feel */
 }
 
+.day-card {
+  border-left: 4px solid var(--color-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Optional: Add a subtle numbering or icon background if desired, but keeping it clean for now */
+
 .card:hover {
-  border-color: var(--color-secondary);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-4px);
+  border-color: rgba(44, 95, 45, 0.2);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-8px);
+}
+
+.day-card:hover {
+  background: linear-gradient(to right, #FFFFFF, var(--color-secondary));
 }
 
 /* Typography */
