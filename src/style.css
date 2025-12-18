@@ -219,3 +219,117 @@ h3 {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Mobile Navigation Styles */
+.mobile-nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  z-index: 1001;
+}
+
+.mobile-nav-toggle span {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: var(--color-primary);
+  margin: 5px 0;
+  transition: all 0.3s ease;
+}
+
+.mobile-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.mobile-nav.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-nav ul {
+  text-align: center;
+}
+
+.mobile-nav li {
+  margin: 1.5rem 0;
+}
+
+.mobile-nav a {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* Hamburger Animation */
+.mobile-nav-toggle.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.mobile-nav-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-nav-toggle.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -6px);
+}
+
+/* Mobile Responsiveness Improvements */
+@media (max-width: 768px) {
+
+  /* Header adjustments */
+  .desktop-nav {
+    display: none;
+  }
+
+  .mobile-nav-toggle {
+    display: block;
+  }
+
+  /* Typography sizing */
+  h1 {
+    font-size: 2.2rem;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+  }
+
+  /* Layout adjustments */
+  .section {
+    padding: var(--spacing-lg) 0;
+  }
+
+  .container {
+    padding: 0 var(--spacing-sm);
+  }
+
+  .team-grid {
+    grid-template-columns: 1fr;
+    /* Single column on mobile */
+    gap: var(--spacing-md);
+  }
+
+  /* Ensure cards don't overflow */
+  .card {
+    padding: var(--spacing-sm);
+  }
+}
