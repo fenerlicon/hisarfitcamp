@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // WhatsApp Button
   const whatsappBtn = document.createElement('a');
-  whatsappBtn.href = 'https://wa.me/905550434743'; // Replace with actual number
+  whatsappBtn.href = 'https://wa.me/905550434743';
   whatsappBtn.target = '_blank';
   whatsappBtn.rel = 'noopener noreferrer';
   whatsappBtn.className = 'whatsapp-btn';
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
 const tabBtns = document.querySelectorAll('.tab-btn');
 const tabContents = document.querySelectorAll('.tab-content');
 
-if(tabBtns.length > 0) {
+if (tabBtns.length > 0) {
   tabBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       // Remove active from all

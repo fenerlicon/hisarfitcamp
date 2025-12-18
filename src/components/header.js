@@ -31,7 +31,7 @@ export function createHeader() {
       </nav>
       
       <div style="display: flex; align-items: center; gap: 1rem;">
-          <a href="/form/" class="btn btn-primary" style="padding: 8px 24px; font-size: 0.9rem; text-decoration: none;">Başvuru Yap</a>
+          <a href="/form/" class="btn btn-primary header-cta" style="padding: 8px 24px; font-size: 0.9rem; text-decoration: none;">Başvuru Yap</a>
           
           <!-- Mobile Nav Toggle -->
           <button class="mobile-nav-toggle" aria-label="Menu">
