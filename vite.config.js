@@ -13,6 +13,7 @@ export default defineConfig({
                 contact: resolve(__dirname, 'contact/index.html'),
                 konaklama: resolve(__dirname, 'konaklama/index.html'),
                 tesekkurler: resolve(__dirname, 'tesekkurler/index.html'),
+                kvkk: resolve(__dirname, 'kvkk/index.html'),
             },
         },
     },
