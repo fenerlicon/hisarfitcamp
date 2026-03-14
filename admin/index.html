@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yönetim Paneli | HisarFitCamp</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #2C5F2D;
+            --color-primary-light: #4E8A50;
+            --color-bg: #f4f7f6;
+            --color-white: #ffffff;
+            --color-text: #333333;
+            --color-border: #e2e8f0;
+            --radius-md: 12px;
+            --shadow-sm: 0 4px 6px rgba(0,0,0,0.05);
+            --shadow-md: 0 10px 15px rgba(0,0,0,0.1);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--color-bg); color: var(--color-text); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        
+        /* Auth Screen */
+        #auth-screen { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+        .auth-card { background: var(--color-white); padding: 3rem; border-radius: var(--radius-md); box-shadow: var(--shadow-md); text-align: center; width: 100%; max-width: 400px; }
+        .auth-card h2 { margin-bottom: 2rem; color: var(--color-primary); }
+        .auth-input { width: 100%; padding: 12px; margin-bottom: 1rem; border: 1px solid var(--color-border); border-radius: 6px; font-family: inherit; font-size: 1rem; }
+        .auth-btn { width: 100%; padding: 12px; background: var(--color-primary); color: white; border: none; border-radius: 6px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: background 0.3s; }
+        .auth-btn:hover { background: var(--color-primary-light); }
+        #auth-error { color: #e11d48; margin-top: 1rem; font-size: 0.9rem; display: none; }
+
+        /* Dashboard */
+        #dashboard { display: none; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--color-border); }
+        .header h1 { color: var(--color-primary); }
+        .logout-btn { padding: 8px 16px; background: transparent; color: #e11d48; border: 2px solid #e11d48; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.3s; }
+        .logout-btn:hover { background: #e11d48; color: white; }
+        
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
+        .stat-card { background: var(--color-white); padding: 1.5rem; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); border-left: 4px solid var(--color-primary); }
+        .stat-card h3 { font-size: 0.9rem; color: #64748b; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .stat-card .value { font-size: 2rem; font-weight: 700; color: var(--color-primary); }
+        
+        .table-container { background: var(--color-white); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); overflow-x: auto; padding: 1px; }
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th, td { padding: 1rem; border-bottom: 1px solid var(--color-border); white-space: nowrap; }
+        th { background: #f8fafc; font-weight: 600; color: #475569; position: sticky; top: 0; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover { background-color: #f1f5f9; }
+        
+        .badge { padding: 0.25rem 0.75rem; border-radius: 50px; font-size: 0.8rem; font-weight: 600; display: inline-block; }
+        .badge-payment { background: #e0f2fe; color: #0284c7; }
+        .badge-acc { background: #fef3c7; color: #d97706; }
+
+        .btn-view { padding: 5px 10px; background: var(--color-primary); color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; }
+        .btn-view:hover { background: var(--color-primary-light); }
+
+        .empty-state { padding: 3rem; text-align: center; color: #64748b; font-size: 1.1rem; }
+
+        /* Detail View */
+        #detail-view { display: none; }
+        .detail-card { background: var(--color-white); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); padding: 2rem; margin-top: 1rem; }
+        .detail-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--color-border); padding-bottom: 1rem; margin-bottom: 1.5rem; }
+        .detail-header h2 { color: var(--color-primary); margin: 0; }
+        .btn-back { padding: 8px 16px; background: #64748b; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.9rem; }
+        .btn-back:hover { background: #475569; }
+        .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .detail-item { margin-bottom: 1rem; }
+        .detail-item label { display: block; font-size: 0.85rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.25rem; }
+        .detail-item div { font-size: 1.05rem; font-weight: 500; color: var(--color-text); background: #f8fafc; padding: 10px; border-radius: 6px; border: 1px solid #e2e8f0; }
+        .full-width { grid-column: span 2; }
+    </style>
+</head>
+<body>
+
+    <!-- Auth Screen -->
+    <div id="auth-screen">
+        <div class="auth-card">
+            <h2>Yönetici Girişi</h2>
+            <input type="password" id="password" class="auth-input" placeholder="Şifrenizi girin">
+            <button class="auth-btn" id="login-btn">Giriş Yap</button>
+            <p id="auth-error">Hatalı şifre. Lütfen tekrar deneyin.</p>
+        </div>
+    </div>
+
+    <!-- Dashboard Screen -->
+    <div id="dashboard" class="container">
+        <div class="header">
+            <h1>HisarFitCamp Başvuruları</h1>
+            <button class="logout-btn" id="logout-btn">Çıkış Yap</button>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Toplam Başvuru</h3>
+                <div class="value" id="stat-total">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Kişi Sayısı (Bilet)</h3>
+                <div class="value" id="stat-tickets">0</div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tarih</th>
+                        <th>Ad Soyad</th>
+                        <th>Telefon</th>
+                        <th>Şehir</th>
+                        <th>Konaklama Türü</th>
+                        <th>Bilet Adedi</th>
+                        <th>Ödeme Türü</th>
+                        <th>Detay</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <!-- Data will be populated here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Detailed View Screen -->
+    <div id="detail-view" class="container">
+        <div class="header" style="border: none; margin-bottom: 0; padding-bottom: 0;">
+            <button class="btn-back" onclick="showDashboard()">← Geri Dön</button>
+        </div>
+        
+        <div class="detail-card">
+            <div class="detail-header">
+                <h2>Başvuru Detayları</h2>
+                <div id="detail-date" style="color: #64748b; font-size: 0.95rem;"></div>
+            </div>
+            
+            <div class="detail-grid" id="detail-content">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple auth state
+        const ADMIN_PASSWORD = "ay&sk.2026"; // Default password is admin
+        let appsData = [];
+
+        const authScreen = document.getElementById('auth-screen');
+        const dashboard = document.getElementById('dashboard');
+        const passwordInput = document.getElementById('password');
+        const loginBtn = document.getElementById('login-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+        const authError = document.getElementById('auth-error');
+
+        // Check if already logged in this session
+        if (sessionStorage.getItem('hisar_admin_logged_in') === 'true') {
+            showDashboard();
+        }
+
+        loginBtn.addEventListener('click', () => {
+            if (passwordInput.value === ADMIN_PASSWORD) {
+                sessionStorage.setItem('hisar_admin_logged_in', 'true');
+                showDashboard();
+            } else {
+                authError.style.display = 'block';
+            }
+        });
+
+        // Add Enter key support
+        passwordInput.addEventListener('keypress', (e) => {
+            if(e.key === 'Enter') loginBtn.click();
+        });
+
+        logoutBtn.addEventListener('click', () => {
+            sessionStorage.removeItem('hisar_admin_logged_in');
+            passwordInput.value = '';
+            authError.style.display = 'none';
+            dashboard.style.display = 'none';
+            authScreen.style.display = 'flex';
+        });
+
+        function showDashboard() {
+            authScreen.style.display = 'none';
+            document.getElementById('detail-view').style.display = 'none';
+            dashboard.style.display = 'block';
+            
+            // Load Data
+            appsData = JSON.parse(localStorage.getItem('hisarfitcamp_applications') || '[]');
+            
+            // Reverse so newest is first
+            appsData.reverse();
+
+            renderDashboard();
+        }
+
+        function renderDashboard() {
+            const tableBody = document.getElementById('table-body');
+            const statTotal = document.getElementById('stat-total');
+            const statTickets = document.getElementById('stat-tickets');
+
+            statTotal.innerText = appsData.length;
+            
+            let totalTickets = 0;
+            tableBody.innerHTML = '';
+
+            if (appsData.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="8"><div class="empty-state">Henüz hiç başvuru yok. Form doldurulduğunda burada listelenecektir.</div></td></tr>`;
+                statTickets.innerText = "0";
+                return;
+            }
+
+            appsData.forEach(app => {
+                const tr = document.createElement('tr');
+                const tickets = parseInt(app.participants) || 1;
+                totalTickets += tickets;
+
+                // Format short date
+                const dateObj = new Date(app.date);
+                const dateStr = dateObj.toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute:'2-digit' });
+
+                tr.innerHTML = `
+                    <td>${dateStr}</td>
+                    <td style="font-weight: 600;">${Math.random() < 0 ? app.name : sanitizeHTML(app.name)}</td>
+                    <td>${sanitizeHTML(app.phone)}</td>
+                    <td>${sanitizeHTML(app.city)}</td>
+                    <td><span class="badge badge-acc">${sanitizeHTML(app.accommodation).split('(')[0]}</span></td>
+                    <td>${tickets}</td>
+                    <td><span class="badge badge-payment">${sanitizeHTML(app.payment_method)}</span></td>
+                    <td><button class="btn-view" onclick="viewDetails('${app.id}')">Tüm Bilgiler</button></td>
+                `;
+                tableBody.appendChild(tr);
+            });
+
+            statTickets.innerText = totalTickets;
+        }
+
+        function viewDetails(appId) {
+            const app = appsData.find(a => a.id === appId);
+            if (!app) return;
+
+            dashboard.style.display = 'none';
+            document.getElementById('detail-view').style.display = 'block';
+
+            const dateObj = new Date(app.date);
+            document.getElementById('detail-date').innerText = dateObj.toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute:'2-digit' });
+
+            const content = document.getElementById('detail-content');
+            content.innerHTML = `
+                <div class="detail-item">
+                    <label>Ana İletişim Kişisi (Ad Soyad)</label>
+                    <div>${sanitizeHTML(app.name)}</div>
+                </div>
+                <div class="detail-item">
+                    <label>Telefon Numarası</label>
+                    <div>${sanitizeHTML(app.phone)}</div>
+                </div>
+                <div class="detail-item">
+                    <label>E-posta Adresi</label>
+                    <div style="word-break: break-all;">${sanitizeHTML(app.email)}</div>
+                </div>
+                <div class="detail-item">
+                    <label>Şehir</label>
+                    <div>${sanitizeHTML(app.city)}</div>
+                </div>
+                <div class="detail-item">
+                    <label>Doğum Tarihi</label>
+                    <div>${sanitizeHTML(app.birthdate)}</div>
+                </div>
+                <div class="detail-item">
+                    <label>Cinsiyet</label>
+                    <div>${sanitizeHTML(app.gender)}</div>
+                </div>
+                <div class="detail-item">
+                    <label>Konaklama Tercihi</label>
+                    <div><span class="badge badge-acc" style="font-size: 0.95rem;">${sanitizeHTML(app.accommodation)}</span></div>
+                </div>
+                <div class="detail-item">
+                    <label>Ödeme Yöntemi</label>
+                    <div><span class="badge badge-payment" style="font-size: 0.95rem;">${sanitizeHTML(app.payment_method)}</span></div>
+                </div>
+                <div class="detail-item full-width">
+                    <label>Eklenecek / Katılacak Tüm Kişiler</label>
+                    <div style="min-height: 60px;">${sanitizeHTML(app.other_participants).replace(/, /g, '<br>')}</div>
+                </div>
+                <div class="detail-item full-width">
+                    <label>Sağlık ve Alerji Durumu</label>
+                    <div>${sanitizeHTML(app.health)}</div>
+                </div>
+                <div class="detail-item full-width">
+                    <label>Ek Notlar</label>
+                    <div>${sanitizeHTML(app.notes)}</div>
+                </div>
+            `;
+        }
+
+        // Basic sanitizer to prevent xss stored in localStorage
+        function sanitizeHTML(str) {
+            if (!str) return '';
+            const temp = document.createElement('div');
+            temp.textContent = str;
+            return temp.innerHTML;
+        }
+    </script>
+</body>
+</html>

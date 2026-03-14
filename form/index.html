@@ -235,95 +235,59 @@
                                 
                                 <h3 style="font-size: 1.4rem; margin-bottom: 1.5rem; text-align: center; color: var(--color-primary);">Kayıt Oluştur</h3>
 
-                                <h4 style="font-size: 1rem; margin-bottom: 1rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem;">Kişisel Bilgiler</h4>
-                                <div class="form-grid two-cols">
-                                    <div class="form-group">
-                                        <label for="name" class="form-label">Ad Soyad *</label>
-                                        <input type="text" id="name" name="name" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="phone" class="form-label">Telefon (WhatsApp) *</label>
-                                        <input type="tel" id="phone" name="phone" class="form-control" required placeholder="05XX XXX XX XX">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email" class="form-label">E-posta Adresi *</label>
-                                    <input type="email" id="email" name="email" class="form-control" required>
-                                </div>
-                                <div class="form-grid two-cols">
-                                    <div class="form-group">
-                                        <label for="birthdate" class="form-label">Doğum Tarihi *</label>
-                                        <input type="date" id="birthdate" name="birthdate" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="gender" class="form-label">Cinsiyet *</label>
-                                        <select id="gender" name="gender" class="form-control" required>
-                                            <option value="" disabled selected>Seçiniz</option>
-                                            <option value="Kadin">Kadın</option>
-                                            <option value="Erkek">Erkek</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="health" class="form-label">Kronik Hastalık / Alerji Durumu</label>
-                                    <textarea id="health" name="health" class="form-control" rows="2" placeholder="Varsa lütfen belirtiniz. (Besin alerjisi, sakatlık vb.)"></textarea>
-                                </div>
-
-                                <h4 style="font-size: 1rem; margin-top: 1.5rem; margin-bottom: 1rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem;">Konaklama & Ödeme</h4>
-                                <div class="form-group">
-                                    <label for="accommodation" class="form-label">Konaklama Tercihi *</label>
-                                    <select id="accommodation" name="accommodation" class="form-control" required>
-                                        <option value="" disabled selected>Lütfen size uygun olanı seçiniz</option>
-                                        <optgroup label="Bungalov Konaklama (Kişi Başı Fiyatları)">
-                                            <option value="Bungalov - 2 Kişilik (Kişi Başı 15.900 TL)">2 Kişilik Bungalov'da Kişi Başı (15.900 TL)</option>
-                                            <option value="Bungalov - Çift Kombine (26.900 TL)">Çift Kombine Bilet (26.900 TL)</option>
-                                            <option value="Bungalov - 3 Kişilik (Kişi Başı 13.900 TL)">3 Kişilik Bungalov'da Kişi Başı (13.900 TL)</option>
-                                            <option value="Bungalov - 3'lü Kombine (35.850 TL)">3'lü Kombine Bilet (35.850 TL)</option>
-                                            <option value="Bungalov - 4 Kişilik (Kişi Başı 11.900 TL)">4 Kişilik Bungalov'da Kişi Başı (11.900 TL)</option>
-                                            <option value="Bungalov - 4'lü Kombine (39.600 TL)">4'lü Kombine Bilet (39.600 TL)</option>
-                                        </optgroup>
-                                        <optgroup label="Çadır Kampı">
-                                            <option value="Çadır - Tek Kişi (7.900 TL)">Çadır - Tek Kişi (7.900 TL)</option>
-                                            <option value="Çadır - 2 Kişi (10.900 TL)">Çadır - 2 Kişi (10.900 TL)</option>
-                                        </optgroup>
-                                        <optgroup label="Karavan Kampı">
-                                            <option value="Karavan - Tek Kişi (10.900 TL)">Karavan - Tek Kişi (10.900 TL)</option>
-                                            <option value="Karavan - 2 Kişi (12.900 TL)">Karavan - 2 Kişi (12.900 TL)</option>
-                                        </optgroup>
+                                <!-- Adım 1: Kişi Sayısı -->
+                                <div class="form-group" style="background: #f8fafc; padding: 1.5rem; border-radius: var(--radius-sm); border: 1px solid #cbd5e1; margin-bottom: 1.5rem;">
+                                    <label for="participants_count" class="form-label" style="font-size: 1.1rem; color: var(--color-primary); margin-bottom: 0.75rem;">1. Kaç kişi katılacaksınız? *</label>
+                                    <select id="participants_count" name="kisi_sayisi" class="form-control" style="font-size: 1.1rem; padding: 12px; font-weight: bold; cursor: pointer;" required>
+                                        <option value="" disabled selected>Kişi sayısı seçiniz...</option>
+                                        <option value="1">1 Kişi</option>
+                                        <option value="2">2 Kişi</option>
+                                        <option value="3">3 Kişi</option>
+                                        <option value="4">4 Kişi</option>
                                     </select>
                                 </div>
-                                <div class="form-grid two-cols">
+
+                                <!-- Adım 2: Konaklama -->
+                                <div id="step-accommodation" style="display: none; background: #fffcf0; padding: 1.5rem; border-radius: var(--radius-sm); border: 1px solid #fde68a; margin-bottom: 1.5rem; animation: fadeIn 0.5s;">
+                                    <label for="accommodation" class="form-label" style="font-size: 1.1rem; color: #b45309; margin-bottom: 0.75rem;">2. Konaklama Tercihiniz *</label>
+                                    <select id="accommodation" name="konaklama_tercihi" class="form-control" style="font-size: 1rem; padding: 12px; font-weight: 500; cursor: pointer;" required>
+                                        <option value="" disabled selected>Seçiniz...</option>
+                                    </select>
+                                </div>
+
+                                <!-- Adım 3: Kişi Bilgileri -->
+                                <div id="step-participants" style="display: none; animation: fadeIn 0.5s;">
+                                    <h4 style="font-size: 1.2rem; color: var(--color-primary); margin-bottom: 1rem; border-bottom: 2px solid var(--color-border); padding-bottom: 0.5rem;">3. Katılımcı Bilgileri</h4>
+                                    <div id="participants-container"></div>
+                                </div>
+
+                                <!-- Adım 4: Ödeme & Diğer -->
+                                <div id="step-payment" style="display: none; animation: fadeIn 0.5s;">
+                                    <h4 style="font-size: 1.2rem; color: var(--color-primary); margin-top: 1.5rem; margin-bottom: 1rem; border-bottom: 2px solid var(--color-border); padding-bottom: 0.5rem;">4. Ödeme Yöntemi & Onay</h4>
+                                    
                                     <div class="form-group">
-                                        <label for="payment_method" class="form-label">Ödeme Tercihi *</label>
-                                        <select id="payment_method" name="payment_method" class="form-control" required>
+                                        <label for="payment_method" class="form-label">Ödeme Tercihiniz *</label>
+                                        <select id="payment_method" name="odeme_yontemi" class="form-control" style="padding: 12px;" required>
                                             <option value="" disabled selected>Seçiniz</option>
                                             <option value="Havale/EFT">Havale / EFT</option>
                                             <option value="Kredi Kartı">Kredi Kartı (Fiyat farkı uygulanır)</option>
                                         </select>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="participants" class="form-label">Bilet Sayısı *</label>
-                                        <input type="number" id="participants" name="participants" class="form-control" min="1" value="1" required>
-                                        <span class="note-text">Eğer kombine bilet alıyorsanız 1 yazın.</span>
+
+                                    <div class="form-group" style="margin-top: 1rem;">
+                                        <label for="notes" class="form-label">Not / Eklemek İstedikleriniz (Varsa)</label>
+                                        <textarea id="notes" name="notlar" class="form-control" rows="3" placeholder="Özel talepleriniz veya belirtmek istedikleriniz..."></textarea>
                                     </div>
-                                </div>
-                                <div class="form-group" id="other-participants-group" style="display: none;">
-                                    <label for="other_participants" class="form-label">Birlikte Katılacağınız Kişiler (varsa)</label>
-                                    <textarea id="other_participants" name="other_participants" class="form-control" rows="2" placeholder="Arkadaşlarınızın Ad Soyad bilgilerini giriniz"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="notes" class="form-label">Not / Eklemek İstedikleriniz</label>
-                                    <textarea id="notes" name="notes" class="form-control" rows="3"></textarea>
-                                </div>
 
-                                <div class="form-group" style="display: flex; gap: 0.75rem; margin-top: 1rem; align-items: flex-start;">
-                                    <input type="checkbox" id="kvkk" name="kvkk" required style="margin-top: 5px;">
-                                    <label for="kvkk" style="font-size: 0.9rem; line-height: 1.4; color: var(--color-text);">
-                                        <a href="/kvkk/" target="_blank" style="text-decoration: underline; color: var(--color-primary); font-weight: 600;">KVKK aydınlatma metnini</a> okudum. HisarFitCamp kurallarını ve kayıt koşullarını kabul ediyorum.
-                                    </label>
-                                </div>
+                                    <div class="form-group" style="display: flex; gap: 0.75rem; margin-top: 1.5rem; align-items: flex-start; background: #f8fafc; padding: 1rem; border-radius: 8px;">
+                                        <input type="checkbox" id="kvkk" name="kvkk_onay" required style="margin-top: 5px; width: 18px; height: 18px;">
+                                        <label for="kvkk" style="font-size: 0.9rem; line-height: 1.5; color: var(--color-text);">
+                                            <a href="/kvkk/" target="_blank" style="text-decoration: underline; color: var(--color-primary); font-weight: 600;">KVKK aydınlatma metnini</a> okudum. HisarFitCamp kurallarını ve kayıt koşullarını kabul ediyorum.
+                                        </label>
+                                    </div>
 
-                                <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1.1rem; padding: 12px; margin-top: 0.5rem; text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px;">Başvuruyu Gönder</button>
+                                    <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1.2rem; padding: 16px; margin-top: 1rem; text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px;">Başvuruyu Tamamla</button>
+                                </div>
                             </form>
 
                             <div id="success-message" class="card text-center" style="display: none; border-top: 4px solid var(--color-primary);">
@@ -346,23 +310,184 @@
                 nextInput.value = window.location.origin + '/tesekkurler/';
             }
 
-            // Show other participants text box if specific condition
-            const accomodationSelect = document.getElementById('accommodation');
-            const otherParticipantsDiv = document.getElementById('other-participants-group');
-            const participantsInput = document.getElementById('participants');
-
-            const toggleOtherParticipants = () => {
-                const val = accomodationSelect.value || '';
-                const count = parseInt(participantsInput.value) || 1;
-                if (val.includes('Kombine') || val.includes('2 Kişi') || count > 1) {
-                    otherParticipantsDiv.style.display = 'block';
-                } else {
-                    otherParticipantsDiv.style.display = 'none';
-                }
+            // Katmanlı Form Mantığı
+            const accOptions = {
+                1: [
+                    { val: "2 Kişilik Bungalov'da Kişi Başı (15.900 TL)", text: "2 Kişilik Bungalov'da Kişi Başı (15.900 TL)" },
+                    { val: "3 Kişilik Bungalov'da Kişi Başı (13.900 TL)", text: "3 Kişilik Bungalov'da Kişi Başı (13.900 TL)" },
+                    { val: "4 Kişilik Bungalov'da Kişi Başı (11.900 TL)", text: "4 Kişilik Bungalov'da Kişi Başı (11.900 TL)" },
+                    { val: "Çadır Kampı - Tek Kişi (7.900 TL)", text: "Çadır Kampı - Tek Kişi (7.900 TL)" },
+                    { val: "Karavan Kampı - Tek Kişi (10.900 TL)", text: "Karavan Kampı - Tek Kişi (10.900 TL)" }
+                ],
+                2: [
+                    { val: "Bungalov - Çift Kombine Bilet (26.900 TL)", text: "Bungalov - Çift Kombine Bilet (26.900 TL)" },
+                    { val: "Çadır Kampı - 2 Kişi (10.900 TL)", text: "Çadır Kampı - 2 Kişi (10.900 TL)" },
+                    { val: "Karavan Kampı - 2 Kişi (12.900 TL)", text: "Karavan Kampı - 2 Kişi (12.900 TL)" },
+                    { val: "3 Kişilik Bungalov'da 2 Kişi (Kişi Başı 13.900 TL)", text: "3 Kişilik Bungalov'da 2 Kişi (Kişi Başı 13.900 TL)" },
+                    { val: "4 Kişilik Bungalov'da 2 Kişi (Kişi Başı 11.900 TL)", text: "4 Kişilik Bungalov'da 2 Kişi (Kişi Başı 11.900 TL)" }
+                ],
+                3: [
+                    { val: "Bungalov - 3'lü Kombine Bilet (35.850 TL)", text: "Bungalov - 3'lü Kombine Bilet (35.850 TL)" },
+                    { val: "4 Kişilik Bungalov'da 3 Kişi (Kişi Başı 11.900 TL)", text: "4 Kişilik Bungalov'da 3 Kişi (Kişi Başı 11.900 TL)" }
+                ],
+                4: [
+                    { val: "Bungalov - 4'lü Kombine Bilet (39.600 TL)", text: "Bungalov - 4'lü Kombine Bilet (39.600 TL)" }
+                ]
             };
 
-            accomodationSelect.addEventListener('change', toggleOtherParticipants);
-            participantsInput.addEventListener('input', toggleOtherParticipants);
+            const countSelect = document.getElementById('participants_count');
+            const accStep = document.getElementById('step-accommodation');
+            const accSelect = document.getElementById('accommodation');
+            const partsStep = document.getElementById('step-participants');
+            const partsContainer = document.getElementById('participants-container');
+            const payStep = document.getElementById('step-payment');
+
+            countSelect.addEventListener('change', (e) => {
+                const count = parseInt(e.target.value);
+                
+                // Konaklama Seçeneklerini Güncelle
+                accSelect.innerHTML = '<option value="" disabled selected>Lütfen konaklama türü seçiniz</option>';
+                accOptions[count].forEach(opt => {
+                    accSelect.innerHTML += `<option value="${opt.val}">${opt.text}</option>`;
+                });
+                
+                // Konaklama adımını göster, diğerlerini gizle
+                accStep.style.display = 'block';
+                partsStep.style.display = 'none';
+                payStep.style.display = 'none';
+                accSelect.value = '';
+                partsContainer.innerHTML = '';
+            });
+
+            accSelect.addEventListener('change', () => {
+                const count = parseInt(countSelect.value);
+                partsContainer.innerHTML = '';
+                
+                for(let i=1; i<=count; i++) {
+                    partsContainer.innerHTML += `
+                        <div class="participant-block" style="background: #fafafa; padding: 1.5rem; border-radius: var(--radius-sm); border: 1px solid #e2e8f0; margin-bottom: 1.5rem; position: relative;">
+                            <div style="position: absolute; top: -12px; left: 1rem; background: var(--color-primary); color: white; padding: 2px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: bold;">
+                                ${i}. Katılımcı ${i === 1 ? '(İletişim Kurulacak Kişi)' : ''}
+                            </div>
+                            
+                            <div class="form-grid two-cols" style="margin-top: 0.5rem;">
+                                <div class="form-group">
+                                    <label class="form-label">Ad Soyad *</label>
+                                    <input type="text" name="kisi${i}_ad_soyad" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Telefon ${i===1?'(WhatsApp) *':'*'}</label>
+                                    <input type="tel" name="kisi${i}_telefon" class="form-control" required placeholder="05XX XXX XX XX" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                </div>
+                            </div>
+
+                            <div class="form-grid two-cols">
+                                <div class="form-group">
+                                    <label class="form-label">E-posta Adresi *</label>
+                                    <input type="email" name="kisi${i}_email" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Katılacağınız Şehir *</label>
+                                    <input type="text" name="kisi${i}_sehir" class="form-control" required placeholder="Örn: İstanbul">
+                                </div>
+                            </div>
+
+                            <div class="form-grid two-cols">
+                                <div class="form-group">
+                                    <label class="form-label">Doğum Tarihi *</label>
+                                    <input type="date" name="kisi${i}_dogum_tarihi" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Cinsiyet *</label>
+                                    <select name="kisi${i}_cinsiyet" class="form-control" required>
+                                        <option value="" disabled selected>Seçiniz</option>
+                                        <option value="Kadın">Kadın</option>
+                                        <option value="Erkek">Erkek</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label class="form-label">Kronik Hastalık / Alerji Durumu</label>
+                                <textarea name="kisi${i}_saglik" class="form-control" rows="1" placeholder="Varsa lütfen belirtiniz. (Besin alerjisi, sakatlık vb.)"></textarea>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Bilgi ve Ödeme adımlarını göster
+                partsStep.style.display = 'block';
+                payStep.style.display = 'block';
+            });
+
+            // Save to localStorage for Admin Panel
+            const applicationForm = document.getElementById('application-form');
+            if (applicationForm) {
+                applicationForm.addEventListener('submit', (e) => {
+                    e.preventDefault(); // Varsayılan yönlendirmeyi iptal et
+                    
+                    const formData = new FormData(applicationForm);
+                    
+                    // Generate full payload array for all participants
+                    let participantsArray = [];
+                    const count = parseInt(formData.get('kisi_sayisi') || '1');
+                    for(let i=1; i<=count; i++) {
+                        participantsArray.push(formData.get(`kisi${i}_ad_soyad`) + " (" + formData.get(`kisi${i}_sehir`) + ")");
+                    }
+
+                    const appData = {
+                        id: Date.now().toString(36) + Math.random().toString(36).substring(2),
+                        date: new Date().toISOString(),
+                        name: formData.get('kisi1_ad_soyad'),
+                        phone: formData.get('kisi1_telefon'),
+                        email: formData.get('kisi1_email'),
+                        city: formData.get('kisi1_sehir'),
+                        accommodation: formData.get('konaklama_tercihi'),
+                        payment_method: formData.get('odeme_yontemi'),
+                        participants: count,
+                        other_participants: participantsArray.join(', '),
+                        notes: formData.get('notlar') || '-'
+                    };
+
+                    const existingApps = JSON.parse(localStorage.getItem('hisarfitcamp_applications') || '[]');
+                    existingApps.push(appData);
+                    localStorage.setItem('hisarfitcamp_applications', JSON.stringify(existingApps));
+
+                    // Submit form via fetch (AJAX) to avoid redirect
+                    const submitBtn = applicationForm.querySelector('button[type="submit"]');
+                    submitBtn.innerText = 'Gönderiliyor...';
+                    submitBtn.disabled = true;
+
+                    fetch(applicationForm.action, {
+                        method: "POST",
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(response => {
+                        applicationForm.style.display = 'none';
+                        document.getElementById('success-message').style.display = 'block';
+                        
+                        // En üste kaydır
+                        window.scrollTo({
+                            top: document.querySelector('.form-layout').offsetTop - 50,
+                            behavior: 'smooth'
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Submission error:', error);
+                        // Hata olsa bile kullanıcıya göster (Aktivasyon vs. sebebiyle)
+                        applicationForm.style.display = 'none';
+                        document.getElementById('success-message').style.display = 'block';
+                        
+                         window.scrollTo({
+                            top: document.querySelector('.form-layout').offsetTop - 50,
+                            behavior: 'smooth'
+                        });
+                    });
+                });
+            }
         });
     </script>
 </body>

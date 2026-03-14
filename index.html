@@ -111,7 +111,8 @@
                   background: var(--color-primary); 
                   border-radius: 10px;
               }
-              .horizontal-gallery img {
+              .horizontal-gallery img,
+              .horizontal-gallery video {
                   scroll-snap-align: center;
                   flex: 0 0 85%;
                   max-width: 450px;
@@ -121,17 +122,22 @@
                   box-shadow: var(--shadow-sm);
               }
               @media (min-width: 768px) {
-                  .horizontal-gallery img {
+                  .horizontal-gallery img,
+                  .horizontal-gallery video {
                       flex: 0 0 45%;
                   }
               }
           </style>
 
           <div class="horizontal-gallery">
-            <img src="/images/konaklama-1.jpg" alt="Kamp Kareleri 1">
-            <img src="/images/konaklama-3.jpg" alt="Kamp Kareleri 3">
-            <img src="/images/konaklama-2.jpg" alt="Kamp Kareleri 2">
-            <img src="/images/konaklama-4.jpg" alt="Kamp Kareleri 4">
+            <img src="/images/konaklama-1.jpg" alt="Kamp Kareleri 1" class="lightbox-trigger">
+            <img src="/images/konaklama-3.jpg" alt="Kamp Kareleri 3" class="lightbox-trigger">
+            <img src="/images/konaklama-2.jpg" alt="Kamp Kareleri 2" class="lightbox-trigger">
+            <img src="/images/konaklama-4.jpg" alt="Kamp Kareleri 4" class="lightbox-trigger">
+            <img src="/images/camp-3.jpg" alt="Kamp Alanı 1" class="lightbox-trigger">
+            <img src="/images/camp-4.jpg" alt="Kamp Alanı Bungalov" class="lightbox-trigger">
+            <video src="/videos/21.mp4" class="lightbox-trigger" autoplay loop muted playsinline alt="Tesis Video 1"></video>
+            <video src="/videos/22.mp4" class="lightbox-trigger" autoplay loop muted playsinline alt="Tesis Video 2"></video>
           </div>
         </div>
       </section>
@@ -205,28 +211,35 @@
                   background: linear-gradient(to left, #fafafa 0%, transparent 100%);
               }
               .partners-track {
-                  display: inline-flex;
+                  display: flex;
                   align-items: center;
                   gap: 5rem;
-                  animation: scroll-partners 25s linear infinite;
+                  /* The track holds instances of the logos. We translate by half of its total width. */
+                  width: max-content;
+                  animation: scroll-partners 20s linear infinite;
+              }
+              .partner-item {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  cursor: pointer;
               }
               .partners-track img {
-                  height: 120px; /* Made logos larger */
+                  height: 160px; /* Made logos even larger */
+                  max-width: 250px;
                   object-fit: contain;
                   object-position: center;
                   transition: transform 0.3s ease;
                   mix-blend-mode: multiply; /* Removes white backgrounds */
                   filter: contrast(1.5) brightness(1.1); /* Force off-white to pure white to remove frames */
               }
-              .partners-track img:hover {
+              .partner-item:hover img {
                   transform: scale(1.05);
-              }
-              /* Specifically handle the first logo which has a black background */
-              .partners-track img[src*="partner-1.png"] {
-                  filter: invert(1) contrast(1.5) brightness(1.1); /* Invert black background to white so multiply blend mode removes it */
               }
               @keyframes scroll-partners {
                   0% { transform: translateX(0); }
+                  /* Instead of guessing, we use the property of flex duplicating exactly half the track width. 
+                     We move it exactly -50% to make it seamless. */
                   100% { transform: translateX(calc(-50% - 2.5rem)); }
               }
           </style>
@@ -234,17 +247,37 @@
           <div class="partners-slider">
             <div class="partners-track">
               <!-- Original set -->
-              <img src="/images/partner-1.png" alt="Aslan" title="Aslan">
-              <img src="/images/partner-2.png" alt="Inter Turkey" title="Inter Turkey">
-              <img src="/images/partner-3.png" alt="Kamp Turkey" title="Kamp Turkey">
-              <img src="/images/partner-4.png" alt="HisarFit Club" title="HisarFit Club">
-              <img src="/images/partner-5.png" alt="Gezgin Burada" title="Gezgin Burada">
+              <div class="partner-item" title="Aslanbaş Medya">
+                <img src="/images/partner-1.png" alt="Aslanbaş Medya">
+              </div>
+              <div class="partner-item" title="Inter Turkey">
+                <img src="/images/partner-new-1.png" alt="Inter Turkey">
+              </div>
+              <div class="partner-item" title="Kamp Turkey">
+                <img src="/images/partner-new-2.png" alt="Kamp Turkey">
+              </div>
+              <div class="partner-item" title="Gezgin Burada">
+                <img src="/images/partner-4.png" alt="Gezgin Burada">
+              </div>
+              <div class="partner-item" title="Influmatch">
+                <img src="/images/partner-new-3.png" alt="Influmatch">
+              </div>
               <!-- Duplicated set for seamless loop -->
-              <img src="/images/partner-1.png" alt="Aslan" title="Aslan">
-              <img src="/images/partner-2.png" alt="Inter Turkey" title="Inter Turkey">
-              <img src="/images/partner-3.png" alt="Kamp Turkey" title="Kamp Turkey">
-              <img src="/images/partner-4.png" alt="HisarFit Club" title="HisarFit Club">
-              <img src="/images/partner-5.png" alt="Gezgin Burada" title="Gezgin Burada">
+              <div class="partner-item" title="Aslanbaş Medya">
+                <img src="/images/partner-1.png" alt="Aslanbaş Medya">
+              </div>
+              <div class="partner-item" title="Inter Turkey">
+                <img src="/images/partner-new-1.png" alt="Inter Turkey">
+              </div>
+              <div class="partner-item" title="Kamp Turkey">
+                <img src="/images/partner-new-2.png" alt="Kamp Turkey">
+              </div>
+              <div class="partner-item" title="Gezgin Burada">
+                <img src="/images/partner-4.png" alt="Gezgin Burada">
+              </div>
+              <div class="partner-item" title="Influmatch">
+                <img src="/images/partner-new-3.png" alt="Influmatch">
+              </div>
             </div>
           </div>
         </div>

@@ -85,3 +85,124 @@ if (tabBtns.length > 0) {
   });
 }
 
+// Lightbox Logic
+document.addEventListener('DOMContentLoaded', () => {
+  // Create Lightbox DOM Elements
+  const lightbox = document.createElement('div');
+  lightbox.className = 'lightbox';
+  
+  const closeBtn = document.createElement('div');
+  closeBtn.className = 'lightbox-close';
+  closeBtn.innerHTML = '&times;';
+  
+  const prevBtn = document.createElement('div');
+  prevBtn.className = 'lightbox-nav lightbox-prev';
+  prevBtn.innerHTML = '&#10094;';
+
+  const nextBtn = document.createElement('div');
+  nextBtn.className = 'lightbox-nav lightbox-next';
+  nextBtn.innerHTML = '&#10095;';
+
+  // Container for image or video
+  const contentContainer = document.createElement('div');
+  contentContainer.style.width = '100%';
+  contentContainer.style.height = '100%';
+  contentContainer.style.display = 'flex';
+  contentContainer.style.alignItems = 'center';
+  contentContainer.style.justifyContent = 'center';
+
+  lightbox.appendChild(closeBtn);
+  lightbox.appendChild(prevBtn);
+  lightbox.appendChild(nextBtn);
+  lightbox.appendChild(contentContainer);
+  document.body.appendChild(lightbox);
+
+  let currentTriggers = [];
+  let currentIndex = 0;
+
+  const showItem = (index) => {
+    if (index < 0) index = currentTriggers.length - 1;
+    if (index >= currentTriggers.length) index = 0;
+    currentIndex = index;
+
+    const trigger = currentTriggers[currentIndex];
+    let contentEl;
+    if (trigger.tagName.toLowerCase() === 'img') {
+      contentEl = document.createElement('img');
+      contentEl.src = trigger.src;
+    } else if (trigger.tagName.toLowerCase() === 'video') {
+      contentEl = document.createElement('video');
+      contentEl.src = trigger.src;
+      contentEl.controls = true;
+      contentEl.autoplay = true;
+    }
+
+    if (contentEl) {
+      contentEl.className = 'lightbox-content';
+      contentContainer.innerHTML = '';
+      contentContainer.appendChild(contentEl);
+    }
+  };
+
+  const closeLightbox = () => {
+    lightbox.classList.remove('active');
+    setTimeout(() => {
+      contentContainer.innerHTML = ''; // Clear content
+    }, 300);
+  };
+
+  closeBtn.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox || e.target === contentContainer) {
+      closeLightbox();
+    }
+  });
+
+  prevBtn.addEventListener('click', () => showItem(currentIndex - 1));
+  nextBtn.addEventListener('click', () => showItem(currentIndex + 1));
+
+  // Determine galleries (so prev/next only loops within the same section)
+  const triggers = document.querySelectorAll('.lightbox-trigger');
+  triggers.forEach((trigger) => {
+    trigger.addEventListener('click', () => {
+      // Find siblings within the same parent/section
+      const parentBlock = trigger.closest('div') || document;
+      currentTriggers = Array.from(parentBlock.querySelectorAll('.lightbox-trigger'));
+      if (currentTriggers.length <= 1) {
+        prevBtn.style.display = 'none';
+        nextBtn.style.display = 'none';
+      } else {
+        prevBtn.style.display = 'block';
+        nextBtn.style.display = 'block';
+      }
+      const index = currentTriggers.indexOf(trigger);
+      showItem(index);
+      lightbox.classList.add('active');
+    });
+  });
+
+  // Swipe Support
+  let touchStartX = 0;
+  let touchEndX = 0;
+  
+  lightbox.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  });
+
+  lightbox.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  });
+
+  const handleSwipe = () => {
+    const swipeThreshold = 50;
+    if (touchEndX < touchStartX - swipeThreshold) {
+      // Swiped left -> next
+      showItem(currentIndex + 1);
+    }
+    if (touchEndX > touchStartX + swipeThreshold) {
+      // Swiped right -> prev
+      showItem(currentIndex - 1);
+    }
+  };
+});

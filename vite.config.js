@@ -14,6 +14,7 @@ export default defineConfig({
                 konaklama: resolve(__dirname, 'konaklama/index.html'),
                 tesekkurler: resolve(__dirname, 'tesekkurler/index.html'),
                 kvkk: resolve(__dirname, 'kvkk/index.html'),
+                admin: resolve(__dirname, 'admin/index.html'),
             },
         },
     },
