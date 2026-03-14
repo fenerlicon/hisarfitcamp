@@ -86,6 +86,56 @@
         </div>
       </section>
 
+      <!-- Scrolling Gallery Section -->
+      <section class="section gallery" style="padding-top: 2rem; padding-bottom: 2rem; overflow: hidden;">
+        <div class="container">
+          <h2 class="text-center" style="margin-bottom: var(--spacing-md);">Kamp Alanımızdan Kareler</h2>
+          
+          <style>
+              .horizontal-gallery {
+                  display: flex;
+                  gap: 1.5rem;
+                  overflow-x: auto;
+                  padding-bottom: 1.5rem;
+                  scroll-snap-type: x mandatory;
+                  -webkit-overflow-scrolling: touch;
+              }
+              .horizontal-gallery::-webkit-scrollbar {
+                  height: 8px;
+              }
+              .horizontal-gallery::-webkit-scrollbar-track {
+                  background: #f1f1f1; 
+                  border-radius: 10px;
+              }
+              .horizontal-gallery::-webkit-scrollbar-thumb {
+                  background: var(--color-primary); 
+                  border-radius: 10px;
+              }
+              .horizontal-gallery img {
+                  scroll-snap-align: center;
+                  flex: 0 0 85%;
+                  max-width: 450px;
+                  height: 320px;
+                  object-fit: cover;
+                  border-radius: var(--radius-md);
+                  box-shadow: var(--shadow-sm);
+              }
+              @media (min-width: 768px) {
+                  .horizontal-gallery img {
+                      flex: 0 0 45%;
+                  }
+              }
+          </style>
+
+          <div class="horizontal-gallery">
+            <img src="/images/konaklama-1.jpg" alt="Kamp Kareleri 1">
+            <img src="/images/konaklama-3.jpg" alt="Kamp Kareleri 3">
+            <img src="/images/konaklama-2.jpg" alt="Kamp Kareleri 2">
+            <img src="/images/konaklama-4.jpg" alt="Kamp Kareleri 4">
+          </div>
+        </div>
+      </section>
+
       <!-- Mini Program Preview -->
       <section class="section program-preview">
         <div class="container text-center">
@@ -114,6 +164,87 @@
             </div>
             <div class="card text-center">
               <h3>Aktivite Alanları</h3>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Partners Section -->
+      <section class="section partners" style="background-color: #fafafa; padding-top: 3rem; padding-bottom: 3rem; overflow: hidden;">
+        <div class="container text-center">
+          <h2 style="margin-bottom: 2rem; font-size: 1.75rem; color: var(--color-primary);">İş Ortaklarımız</h2>
+          
+          <style>
+              .partners-slider {
+                  width: 100%;
+                  overflow: hidden;
+                  white-space: nowrap;
+                  position: relative;
+                  display: flex;
+                  align-items: center;
+              }
+              .partners-slider:hover .partners-track {
+                  animation-play-state: paused;
+              }
+              .partners-slider::before,
+              .partners-slider::after {
+                  content: "";
+                  position: absolute;
+                  top: 0;
+                  width: 100px;
+                  height: 100%;
+                  z-index: 2;
+                  pointer-events: none;
+              }
+              .partners-slider::before {
+                  left: 0;
+                  background: linear-gradient(to right, #fafafa 0%, transparent 100%);
+              }
+              .partners-slider::after {
+                  right: 0;
+                  background: linear-gradient(to left, #fafafa 0%, transparent 100%);
+              }
+              .partners-track {
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 5rem;
+                  animation: scroll-partners 25s linear infinite;
+              }
+              .partners-track img {
+                  height: 120px; /* Made logos larger */
+                  object-fit: contain;
+                  object-position: center;
+                  transition: transform 0.3s ease;
+                  mix-blend-mode: multiply; /* Removes white backgrounds */
+                  filter: contrast(1.5) brightness(1.1); /* Force off-white to pure white to remove frames */
+              }
+              .partners-track img:hover {
+                  transform: scale(1.05);
+              }
+              /* Specifically handle the first logo which has a black background */
+              .partners-track img[src*="partner-1.png"] {
+                  filter: invert(1) contrast(1.5) brightness(1.1); /* Invert black background to white so multiply blend mode removes it */
+              }
+              @keyframes scroll-partners {
+                  0% { transform: translateX(0); }
+                  100% { transform: translateX(calc(-50% - 2.5rem)); }
+              }
+          </style>
+
+          <div class="partners-slider">
+            <div class="partners-track">
+              <!-- Original set -->
+              <img src="/images/partner-1.png" alt="Aslan" title="Aslan">
+              <img src="/images/partner-2.png" alt="Inter Turkey" title="Inter Turkey">
+              <img src="/images/partner-3.png" alt="Kamp Turkey" title="Kamp Turkey">
+              <img src="/images/partner-4.png" alt="HisarFit Club" title="HisarFit Club">
+              <img src="/images/partner-5.png" alt="Gezgin Burada" title="Gezgin Burada">
+              <!-- Duplicated set for seamless loop -->
+              <img src="/images/partner-1.png" alt="Aslan" title="Aslan">
+              <img src="/images/partner-2.png" alt="Inter Turkey" title="Inter Turkey">
+              <img src="/images/partner-3.png" alt="Kamp Turkey" title="Kamp Turkey">
+              <img src="/images/partner-4.png" alt="HisarFit Club" title="HisarFit Club">
+              <img src="/images/partner-5.png" alt="Gezgin Burada" title="Gezgin Burada">
             </div>
           </div>
         </div>
