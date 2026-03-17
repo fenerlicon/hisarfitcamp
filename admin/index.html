@@ -98,30 +98,81 @@
                 <h3>Toplam Başvuru</h3>
                 <div class="value" id="stat-total">0</div>
             </div>
-            <div class="stat-card">
-                <h3>Kişi Sayısı (Bilet)</h3>
-                <div class="value" id="stat-tickets">0</div>
+            <h1>Yönetim Paneli</h1>
+            <div class="header-actions">
+                <button class="logout-btn" id="logout-btn">Çıkış Yap</button>
             </div>
         </div>
 
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Tarih</th>
-                        <th>Ad Soyad</th>
-                        <th>Telefon</th>
-                        <th>Şehir</th>
-                        <th>Konaklama Türü</th>
-                        <th>Bilet Adedi</th>
-                        <th>Ödeme Türü</th>
-                        <th>Detay</th>
-                    </tr>
-                </thead>
-                <tbody id="table-body">
-                    <!-- Data will be populated here -->
-                </tbody>
-            </table>
+        <div class="nav-tabs">
+            <div class="nav-tab active" onclick="switchTab('applications')">Başvurular</div>
+            <div class="nav-tab" onclick="switchTab('promotions')">Promosyon Kodları</div>
+        </div>
+
+        <!-- Applications Tab -->
+        <div id="tab-applications" class="tab-content active">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Toplam Başvuru</h3>
+                    <div class="value" id="stat-total">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Kişi Sayısı (Bilet)</h3>
+                    <div class="value" id="stat-tickets">0</div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tarih</th>
+                            <th>Ad Soyad</th>
+                            <th>Telefon</th>
+                            <th>Şehir</th>
+                            <th>Konaklama</th>
+                            <th>Kişi</th>
+                            <th>Ödeme</th>
+                            <th>Promo</th>
+                            <th>İşlem</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                        <!-- Data will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Promotions Tab -->
+        <div id="tab-promotions" class="tab-content">
+            <div class="promo-form">
+                <div class="form-group">
+                    <label>Promosyon Kodu</label>
+                    <input type="text" id="promo-code-input" placeholder="Örn: HISAR10">
+                </div>
+                <div class="form-group">
+                    <label>İndirim Oranı (%)</label>
+                    <input type="number" id="promo-discount-input" placeholder="Örn: 10" min="1" max="100">
+                </div>
+                <button onclick="addPromoCode()">Kod Ekle</button>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Kod</th>
+                            <th>İndirim Oranı</th>
+                            <th>Eklenme Tarihi</th>
+                            <th>İşlem</th>
+                        </tr>
+                    </thead>
+                    <tbody id="promo-table-body">
+                        <!-- Data will be populated here -->
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -147,6 +198,7 @@
         // Simple auth state
         const ADMIN_PASSWORD = "ay&sk.2026"; // Default password is admin
         let appsData = [];
+        let promoCodes = [];
 
         const authScreen = document.getElementById('auth-screen');
         const dashboard = document.getElementById('dashboard');
@@ -182,6 +234,21 @@
             authScreen.style.display = 'flex';
         });
 
+        function switchTab(tab) {
+            document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            
+            if (tab === 'applications') {
+                document.querySelector('.nav-tab:nth-child(1)').classList.add('active');
+                document.getElementById('tab-applications').classList.add('active');
+                renderDashboard();
+            } else {
+                document.querySelector('.nav-tab:nth-child(2)').classList.add('active');
+                document.getElementById('tab-promotions').classList.add('active');
+                renderPromotions();
+            }
+        }
+
         function showDashboard() {
             authScreen.style.display = 'none';
             document.getElementById('detail-view').style.display = 'none';
@@ -189,11 +256,12 @@
             
             // Load Data
             appsData = JSON.parse(localStorage.getItem('hisarfitcamp_applications') || '[]');
+            promoCodes = JSON.parse(localStorage.getItem('hisarfitcamp_promos') || '[]');
             
             // Reverse so newest is first
             appsData.reverse();
 
-            renderDashboard();
+            switchTab('applications'); // Default to applications tab
         }
 
         function renderDashboard() {
@@ -207,7 +275,7 @@
             tableBody.innerHTML = '';
 
             if (appsData.length === 0) {
-                tableBody.innerHTML = `<tr><td colspan="8"><div class="empty-state">Henüz hiç başvuru yok. Form doldurulduğunda burada listelenecektir.</div></td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="9"><div class="empty-state">Henüz hiç başvuru yok. Form doldurulduğunda burada listelenecektir.</div></td></tr>`;
                 statTickets.innerText = "0";
                 return;
             }
@@ -223,18 +291,82 @@
 
                 tr.innerHTML = `
                     <td>${dateStr}</td>
-                    <td style="font-weight: 600;">${Math.random() < 0 ? app.name : sanitizeHTML(app.name)}</td>
+                    <td style="font-weight: 600;">${sanitizeHTML(app.name)}</td>
                     <td>${sanitizeHTML(app.phone)}</td>
                     <td>${sanitizeHTML(app.city)}</td>
                     <td><span class="badge badge-acc">${sanitizeHTML(app.accommodation).split('(')[0]}</span></td>
                     <td>${tickets}</td>
                     <td><span class="badge badge-payment">${sanitizeHTML(app.payment_method)}</span></td>
+                    <td>${app.promo_code ? `<span class="badge badge-promo">${sanitizeHTML(app.promo_code)}</span>` : '-'}</td>
                     <td><button class="btn-view" onclick="viewDetails('${app.id}')">Tüm Bilgiler</button></td>
                 `;
                 tableBody.appendChild(tr);
             });
 
             statTickets.innerText = totalTickets;
+        }
+
+        function renderPromotions() {
+            const promoTableBody = document.getElementById('promo-table-body');
+            promoTableBody.innerHTML = '';
+
+            if (promoCodes.length === 0) {
+                promoTableBody.innerHTML = `<tr><td colspan="4"><div class="empty-state">Henüz hiç promosyon kodu yok.</div></td></tr>`;
+                return;
+            }
+
+            promoCodes.forEach((promo, index) => {
+                const tr = document.createElement('tr');
+                const dateObj = new Date(promo.createdAt);
+                const dateStr = dateObj.toLocaleDateString('tr-TR');
+
+                tr.innerHTML = `
+                    <td style="font-weight: bold; color: var(--color-primary);">${sanitizeHTML(promo.code)}</td>
+                    <td>%${promo.discount}</td>
+                    <td>${dateStr}</td>
+                    <td><button class="btn-delete" onclick="deletePromoCode(${index})">Sil</button></td>
+                `;
+                promoTableBody.appendChild(tr);
+            });
+        }
+
+        function addPromoCode() {
+            const codeInput = document.getElementById('promo-code-input');
+            const discountInput = document.getElementById('promo-discount-input');
+            
+            const code = codeInput.value.trim().toUpperCase();
+            const discount = parseInt(discountInput.value);
+
+            if (!code || !discount) {
+                alert('Lütfen tüm alanları doldurun.');
+                return;
+            }
+
+            if (promoCodes.some(p => p.code === code)) {
+                alert('Bu kod zaten mevcut.');
+                return;
+            }
+
+            promoCodes.push({
+                id: crypto.randomUUID(), // Add a unique ID for potential future use
+                code: code,
+                discount: discount,
+                createdAt: new Date().toISOString()
+            });
+
+            localStorage.setItem('hisarfitcamp_promos', JSON.stringify(promoCodes));
+            
+            codeInput.value = '';
+            discountInput.value = '';
+            renderPromotions();
+        }
+
+        function deletePromoCode(index) {
+            if (confirm('Bu promosyon kodunu silmek istediğinize emin misiniz?')) {
+                promoCodes.splice(index, 1);
+                localStorage.setItem('hisarfitcamp_promos', JSON.stringify(promoCodes));
+                renderPromotions();
+            }
         }
 
         function viewDetails(appId) {
@@ -248,6 +380,21 @@
             document.getElementById('detail-date').innerText = dateObj.toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute:'2-digit' });
 
             const content = document.getElementById('detail-content');
+            
+            let amountInfo = '';
+            if (app.total_amount) {
+                amountInfo = `
+                    <div class="detail-item">
+                        <label>Normal Tutar</label>
+                        <div style="text-decoration: ${app.promo_code ? 'line-through' : 'none'};">${app.original_amount ? app.original_amount + ' TL' : '-'}</div>
+                    </div>
+                    <div class="detail-item">
+                        <label>Ödenecek Tutar ${app.promo_code ? `(%${app.promo_discount} İndirimli)` : ''}</label>
+                        <div style="font-weight: bold; color: var(--color-primary); font-size: 1.2rem;">${app.total_amount} TL</div>
+                    </div>
+                `;
+            }
+
             content.innerHTML = `
                 <div class="detail-item">
                     <label>Ana İletişim Kişisi (Ad Soyad)</label>
@@ -281,9 +428,19 @@
                     <label>Ödeme Yöntemi</label>
                     <div><span class="badge badge-payment" style="font-size: 0.95rem;">${sanitizeHTML(app.payment_method)}</span></div>
                 </div>
+                
+                ${app.promo_code ? `
+                <div class="detail-item">
+                    <label>Kullanılan Promosyon Kodu</label>
+                    <div><span class="badge badge-promo" style="font-size: 0.95rem;">${sanitizeHTML(app.promo_code)} (%${app.promo_discount} İndirim)</span></div>
+                </div>
+                ` : ''}
+                
+                ${amountInfo}
+
                 <div class="detail-item full-width">
                     <label>Eklenecek / Katılacak Tüm Kişiler</label>
-                    <div style="min-height: 60px;">${sanitizeHTML(app.other_participants).replace(/, /g, '<br>')}</div>
+                    <div style="min-height: 40px; white-space: pre-line;">${sanitizeHTML(app.other_participants).replace(/, /g, '\n')}</div>
                 </div>
                 <div class="detail-item full-width">
                     <label>Sağlık ve Alerji Durumu</label>

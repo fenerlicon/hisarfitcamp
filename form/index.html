@@ -265,6 +265,15 @@
                                 <div id="step-payment" style="display: none; animation: fadeIn 0.5s;">
                                     <h4 style="font-size: 1.2rem; color: var(--color-primary); margin-top: 1.5rem; margin-bottom: 1rem; border-bottom: 2px solid var(--color-border); padding-bottom: 0.5rem;">4. Ödeme Yöntemi & Onay</h4>
                                     
+                                    <div id="promo-section" style="background: #f0fdf4; padding: 1rem; border-radius: var(--radius-sm); border: 1px solid #bbf7d0; margin-bottom: 1.5rem;">
+                                        <label for="promo_code" class="form-label" style="color: #166534;">Promosyon Kodu (Varsa)</label>
+                                        <div style="display: flex; gap: 0.5rem;">
+                                            <input type="text" id="promo_code" name="promosyon_kodu" class="form-control" placeholder="Kodunuzu girin" style="text-transform: uppercase;">
+                                            <button type="button" id="apply-promo" class="btn btn-secondary" style="padding: 10px 20px; white-space: nowrap;">Uygula</button>
+                                        </div>
+                                        <div id="promo-message" style="font-size: 0.85rem; margin-top: 0.5rem; display: none;"></div>
+                                    </div>
+
                                     <div class="form-group">
                                         <label for="payment_method" class="form-label">Ödeme Tercihiniz *</label>
                                         <select id="payment_method" name="odeme_yontemi" class="form-control" style="padding: 12px;" required>
@@ -272,6 +281,25 @@
                                             <option value="Havale/EFT">Havale / EFT</option>
                                             <option value="Kredi Kartı">Kredi Kartı (Fiyat farkı uygulanır)</option>
                                         </select>
+                                    </div>
+
+                                    <div id="price-summary" style="background: #f8fafc; padding: 1.5rem; border-radius: var(--radius-sm); border: 2px solid var(--color-primary); margin-top: 1.5rem; margin-bottom: 1.5rem; display: none; animation: fadeIn 0.5s;">
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                            <span>Paket Tutarı:</span>
+                                            <span id="original-price" style="font-weight: 500;">0 TL</span>
+                                        </div>
+                                        <div id="discount-row" style="display: none; justify-content: space-between; margin-bottom: 0.5rem; color: #166534;">
+                                            <span id="discount-label">İndirim (%0):</span>
+                                            <span id="discount-amount">-0 TL</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; border-top: 1px solid #cbd5e1; padding-top: 0.5rem; font-weight: bold; font-size: 1.2rem; color: var(--color-primary);">
+                                            <span>Toplam Ödenecek:</span>
+                                            <span id="total-price">0 TL</span>
+                                        </div>
+                                        <p style="font-size: 0.8rem; color: #64748b; margin-top: 0.5rem; line-height: 1.2;">
+                                            * Belirtilen tutar seçtiğiniz ödeme yöntemine göre hesaplanmıştır. <br>
+                                            * Havale/EFT ödemelerinde indirimli fiyat uygulanmaktadır.
+                                        </p>
                                     </div>
 
                                     <div class="form-group" style="margin-top: 1rem;">
@@ -313,23 +341,23 @@
             // Katmanlı Form Mantığı
             const accOptions = {
                 1: [
-                    { val: "2 Kişilik Bungalov'da Kişi Başı (15.900 TL)", text: "2 Kişilik Bungalov'da Kişi Başı (15.900 TL)" },
-                    { val: "3 Kişilik Bungalov'da Kişi Başı (13.900 TL)", text: "3 Kişilik Bungalov'da Kişi Başı (13.900 TL)" },
-                    { val: "4 Kişilik Bungalov'da Kişi Başı (11.900 TL)", text: "4 Kişilik Bungalov'da Kişi Başı (11.900 TL)" },
-                    { val: "Çadır Kampı - Tek Kişi (7.900 TL)", text: "Çadır Kampı - Tek Kişi (7.900 TL)" },
-                    { val: "Karavan Kampı - Tek Kişi (10.900 TL)", text: "Karavan Kampı - Tek Kişi (10.900 TL)" }
+                    { val: "2 Kişilik Bungalov'da Kişi Başı", text: "2 Kişilik Bungalov'da Kişi Başı (15.900 TL)", price_havale: 15900, price_cc: 17800 },
+                    { val: "3 Kişilik Bungalov'da Kişi Başı", text: "3 Kişilik Bungalov'da Kişi Başı (13.900 TL)", price_havale: 13900, price_cc: 15900 },
+                    { val: "4 Kişilik Bungalov'da Kişi Başı", text: "4 Kişilik Bungalov'da Kişi Başı (11.900 TL)", price_havale: 11900, price_cc: 13900 },
+                    { val: "Çadır Kampı - Tek Kişi", text: "Çadır Kampı - Tek Kişi (7.900 TL)", price_havale: 7900, price_cc: 8900 },
+                    { val: "Karavan Kampı - Tek Kişi", text: "Karavan Kampı - Tek Kişi (10.900 TL)", price_havale: 10900, price_cc: 12500 }
                 ],
                 2: [
-                    { val: "Bungalov - Çift Kombine Bilet (26.900 TL)", text: "Bungalov - Çift Kombine Bilet (26.900 TL)" },
-                    { val: "Çadır Kampı - 2 Kişi (10.900 TL)", text: "Çadır Kampı - 2 Kişi (10.900 TL)" },
-                    { val: "Karavan Kampı - 2 Kişi (12.900 TL)", text: "Karavan Kampı - 2 Kişi (12.900 TL)" }
+                    { val: "Bungalov - Çift Kombine Bilet", text: "Bungalov - Çift Kombine Bilet (26.900 TL)", price_havale: 26900, price_cc: 30900 },
+                    { val: "Çadır Kampı - 2 Kişi", text: "Çadır Kampı - 2 Kişi (10.900 TL)", price_havale: 10900, price_cc: 12500 },
+                    { val: "Karavan Kampı - 2 Kişi", text: "Karavan Kampı - 2 Kişi (12.900 TL)", price_havale: 12900, price_cc: 14800 }
                 ],
                 3: [
-                    { val: "Bungalov - 3'lü Kombine Bilet (35.850 TL)", text: "Bungalov - 3'lü Kombine Bilet (35.850 TL)" },
-                    { val: "4 Kişilik Bungalov'da 3 Kişi (Kişi Başı 11.900 TL)", text: "4 Kişilik Bungalov'da 3 Kişi (Kişi Başı 11.900 TL)" }
+                    { val: "Bungalov - 3'lü Kombine Bilet", text: "Bungalov - 3'lü Kombine Bilet (35.850 TL)", price_havale: 35850, price_cc: 41900 },
+                    { val: "4 Kişilik Bungalov'da 3 Kişi", text: "4 Kişilik Bungalov'da 3 Kişi (Kişi Başı 11.900 TL)", price_havale: 35700, price_cc: 41700 }
                 ],
                 4: [
-                    { val: "Bungalov - 4'lü Kombine Bilet (39.600 TL)", text: "Bungalov - 4'lü Kombine Bilet (39.600 TL)" }
+                    { val: "Bungalov - 4'lü Kombine Bilet", text: "Bungalov - 4'lü Kombine Bilet (39.600 TL)", price_havale: 39600, price_cc: 47700 }
                 ]
             };
 
@@ -339,14 +367,52 @@
             const partsStep = document.getElementById('step-participants');
             const partsContainer = document.getElementById('participants-container');
             const payStep = document.getElementById('step-payment');
+            const paymentMethodSelect = document.getElementById('payment_method');
+
+            // Promo Variables
+            let selectedAccData = null;
+            let appliedPromo = null;
+
+            const updatePriceSummary = () => {
+                const summaryDiv = document.getElementById('price-summary');
+                const originalPriceEl = document.getElementById('original-price');
+                const totalEl = document.getElementById('total-price');
+                const discountRow = document.getElementById('discount-row');
+                const discountLabel = document.getElementById('discount-label');
+                const discountAmountEl = document.getElementById('discount-amount');
+
+                const paymentMethod = paymentMethodSelect.value;
+
+                if (selectedAccData && paymentMethod) {
+                    const basePrice = paymentMethod === 'Kredi Kartı' ? selectedAccData.price_cc : selectedAccData.price_havale;
+                    
+                    summaryDiv.style.display = 'block';
+                    originalPriceEl.innerText = basePrice.toLocaleString('tr-TR') + ' TL';
+                    
+                    if (appliedPromo) {
+                        const discount = Math.round(basePrice * (appliedPromo.discount / 100));
+                        const finalPrice = basePrice - discount;
+                        
+                        discountRow.style.display = 'flex';
+                        discountLabel.innerText = `İndirim (%${appliedPromo.discount}):`;
+                        discountAmountEl.innerText = `-${discount.toLocaleString('tr-TR')} TL`;
+                        totalEl.innerText = finalPrice.toLocaleString('tr-TR') + ' TL';
+                    } else {
+                        discountRow.style.display = 'none';
+                        totalEl.innerText = basePrice.toLocaleString('tr-TR') + ' TL';
+                    }
+                } else {
+                    summaryDiv.style.display = 'none';
+                }
+            };
 
             countSelect.addEventListener('change', (e) => {
                 const count = parseInt(e.target.value);
                 
                 // Konaklama Seçeneklerini Güncelle
                 accSelect.innerHTML = '<option value="" disabled selected>Lütfen konaklama türü seçiniz</option>';
-                accOptions[count].forEach(opt => {
-                    accSelect.innerHTML += `<option value="${opt.val}">${opt.text}</option>`;
+                accOptions[count].forEach((opt, idx) => {
+                    accSelect.innerHTML += `<option value="${opt.val}" data-idx="${idx}">${opt.text}</option>`;
                 });
                 
                 // Konaklama adımını göster, diğerlerini gizle
@@ -355,10 +421,17 @@
                 payStep.style.display = 'none';
                 accSelect.value = '';
                 partsContainer.innerHTML = '';
+                selectedAccData = null;
+                paymentMethodSelect.value = '';
+                updatePriceSummary();
             });
 
             accSelect.addEventListener('change', () => {
                 const count = parseInt(countSelect.value);
+                const selectedOption = accSelect.options[accSelect.selectedIndex];
+                const idx = selectedOption.getAttribute('data-idx');
+                selectedAccData = accOptions[count][idx];
+                
                 partsContainer.innerHTML = '';
                 
                 for(let i=1; i<=count; i++) {
@@ -416,6 +489,38 @@
                 // Bilgi ve Ödeme adımlarını göster
                 partsStep.style.display = 'block';
                 payStep.style.display = 'block';
+                updatePriceSummary();
+            });
+
+            paymentMethodSelect.addEventListener('change', updatePriceSummary);
+
+            // Promo Logic
+            document.getElementById('apply-promo').addEventListener('click', () => {
+                const code = document.getElementById('promo_code').value.trim().toUpperCase();
+                const msg = document.getElementById('promo-message');
+                
+                if (!code) {
+                    msg.innerText = "Lütfen bir kod girin.";
+                    msg.style.color = "red";
+                    msg.style.display = "block";
+                    return;
+                }
+
+                const promos = JSON.parse(localStorage.getItem('hisarfitcamp_promos') || '[]');
+                const found = promos.find(p => p.code === code);
+
+                if (found) {
+                    appliedPromo = found;
+                    msg.innerText = `Tebrikler! %${found.discount} indirim uygulandı.`;
+                    msg.style.color = "green";
+                    msg.style.display = "block";
+                } else {
+                    appliedPromo = null;
+                    msg.innerText = "Geçersiz promosyon kodu.";
+                    msg.style.color = "red";
+                    msg.style.display = "block";
+                }
+                updatePriceSummary();
             });
 
             // Save to localStorage for Admin Panel
@@ -433,6 +538,12 @@
                         participantsArray.push(formData.get(`kisi${i}_ad_soyad`) + " (" + formData.get(`kisi${i}_sehir`) + ")");
                     }
 
+                    // Calculate final prices based on selected method
+                    const paymentMethod = paymentMethodSelect.value;
+                    const basePrice = paymentMethod === 'Kredi Kartı' ? selectedAccData.price_cc : selectedAccData.price_havale;
+                    const discount = appliedPromo ? Math.round(basePrice * (appliedPromo.discount / 100)) : 0;
+                    const finalTotal = basePrice - discount;
+
                     const appData = {
                         id: Date.now().toString(36) + Math.random().toString(36).substring(2),
                         date: new Date().toISOString(),
@@ -441,10 +552,15 @@
                         email: formData.get('kisi1_email'),
                         city: formData.get('kisi1_sehir'),
                         accommodation: formData.get('konaklama_tercihi'),
-                        payment_method: formData.get('odeme_yontemi'),
+                        payment_method: paymentMethod,
                         participants: count,
                         other_participants: participantsArray.join(', '),
-                        notes: formData.get('notlar') || '-'
+                        notes: formData.get('notlar') || '-',
+                        // Promo fields
+                        promo_code: appliedPromo ? appliedPromo.code : null,
+                        promo_discount: appliedPromo ? appliedPromo.discount : 0,
+                        original_amount: basePrice,
+                        total_amount: finalTotal
                     };
 
                     const existingApps = JSON.parse(localStorage.getItem('hisarfitcamp_applications') || '[]');
@@ -455,6 +571,10 @@
                     const submitBtn = applicationForm.querySelector('button[type="submit"]');
                     submitBtn.innerText = 'Gönderiliyor...';
                     submitBtn.disabled = true;
+
+                    // Append total amount to formData for FormSubmit notify
+                    formData.append('toplam_tutar', finalTotal + " TL");
+                    if (appliedPromo) formData.append('kullanilan_promo', appliedPromo.code + " (%"+appliedPromo.discount+" İndirim)");
 
                     fetch(applicationForm.action, {
                         method: "POST",
