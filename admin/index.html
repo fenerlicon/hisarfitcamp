@@ -194,9 +194,15 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
+        // Supabase Configuration
+        const SUPABASE_URL = 'https://scabaoarvsanovagpomr.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjYWJhb2FydnNhbm92YWdwb21yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2OTE2MTksImV4cCI6MjA5MDI2NzYxOX0.c-qunJjpgpsl_YYGW6UIxlmV18j9OaCiLysnuyBt0Gw';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
         // Simple auth state
-        const ADMIN_PASSWORD = "ay&sk.2026"; // Default password is admin
+        const ADMIN_PASSWORD = "ay&sk.2026"; 
         let appsData = [];
         let promoCodes = [];
 
@@ -204,7 +210,7 @@
         const dashboard = document.getElementById('dashboard');
         const passwordInput = document.getElementById('password');
         const loginBtn = document.getElementById('login-btn');
-        const logoutBtn = document.getElementById('logout-btn');
+        const logoutBtns = document.querySelectorAll('.logout-btn');
         const authError = document.getElementById('auth-error');
 
         // Check if already logged in this session
@@ -226,12 +232,14 @@
             if(e.key === 'Enter') loginBtn.click();
         });
 
-        logoutBtn.addEventListener('click', () => {
-            sessionStorage.removeItem('hisar_admin_logged_in');
-            passwordInput.value = '';
-            authError.style.display = 'none';
-            dashboard.style.display = 'none';
-            authScreen.style.display = 'flex';
+        logoutBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                sessionStorage.removeItem('hisar_admin_logged_in');
+                passwordInput.value = '';
+                authError.style.display = 'none';
+                dashboard.style.display = 'none';
+                authScreen.style.display = 'flex';
+            });
         });
 
         function switchTab(tab) {
@@ -241,40 +249,63 @@
             if (tab === 'applications') {
                 document.querySelector('.nav-tab:nth-child(1)').classList.add('active');
                 document.getElementById('tab-applications').classList.add('active');
-                renderDashboard();
+                fetchApplications(); // Fetch from Supabase
             } else {
                 document.querySelector('.nav-tab:nth-child(2)').classList.add('active');
                 document.getElementById('tab-promotions').classList.add('active');
-                renderPromotions();
+                fetchPromos(); // Fetch from Supabase
             }
         }
 
-        function showDashboard() {
+        async function showDashboard() {
             authScreen.style.display = 'none';
             document.getElementById('detail-view').style.display = 'none';
             dashboard.style.display = 'block';
             
-            // Load Data
-            appsData = JSON.parse(localStorage.getItem('hisarfitcamp_applications') || '[]');
-            promoCodes = JSON.parse(localStorage.getItem('hisarfitcamp_promos') || '[]');
-            
-            // Reverse so newest is first
-            appsData.reverse();
-
             switchTab('applications'); // Default to applications tab
+        }
+
+        async function fetchApplications() {
+            const { data, error } = await supabaseClient
+                .from('applications')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                console.error('Fetch apps error:', error);
+                return;
+            }
+
+            appsData = data;
+            renderDashboard();
+        }
+
+        async function fetchPromos() {
+            const { data, error } = await supabaseClient
+                .from('promos')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                console.error('Fetch promos error:', error);
+                return;
+            }
+
+            promoCodes = data;
+            renderPromotions();
         }
 
         function renderDashboard() {
             const tableBody = document.getElementById('table-body');
-            const statTotal = document.getElementById('stat-total');
+            const statTotalEls = document.querySelectorAll('[id="stat-total"]');
             const statTickets = document.getElementById('stat-tickets');
 
-            statTotal.innerText = appsData.length;
+            statTotalEls.forEach(el => el.innerText = appsData.length || 0);
             
             let totalTickets = 0;
             tableBody.innerHTML = '';
 
-            if (appsData.length === 0) {
+            if (!appsData || appsData.length === 0) {
                 tableBody.innerHTML = `<tr><td colspan="9"><div class="empty-state">Henüz hiç başvuru yok. Form doldurulduğunda burada listelenecektir.</div></td></tr>`;
                 statTickets.innerText = "0";
                 return;
@@ -285,8 +316,7 @@
                 const tickets = parseInt(app.participants) || 1;
                 totalTickets += tickets;
 
-                // Format short date
-                const dateObj = new Date(app.date);
+                const dateObj = new Date(app.date || app.created_at);
                 const dateStr = dateObj.toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute:'2-digit' });
 
                 tr.innerHTML = `
@@ -310,27 +340,27 @@
             const promoTableBody = document.getElementById('promo-table-body');
             promoTableBody.innerHTML = '';
 
-            if (promoCodes.length === 0) {
+            if (!promoCodes || promoCodes.length === 0) {
                 promoTableBody.innerHTML = `<tr><td colspan="4"><div class="empty-state">Henüz hiç promosyon kodu yok.</div></td></tr>`;
                 return;
             }
 
-            promoCodes.forEach((promo, index) => {
+            promoCodes.forEach((promo) => {
                 const tr = document.createElement('tr');
-                const dateObj = new Date(promo.createdAt);
+                const dateObj = new Date(promo.created_at);
                 const dateStr = dateObj.toLocaleDateString('tr-TR');
 
                 tr.innerHTML = `
                     <td style="font-weight: bold; color: var(--color-primary);">${sanitizeHTML(promo.code)}</td>
                     <td>%${promo.discount}</td>
                     <td>${dateStr}</td>
-                    <td><button class="btn-delete" onclick="deletePromoCode(${index})">Sil</button></td>
+                    <td><button class="btn-delete" style="background:#e11d48; color:white; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;" onclick="deletePromoCode('${promo.id}')">Sil</button></td>
                 `;
                 promoTableBody.appendChild(tr);
             });
         }
 
-        function addPromoCode() {
+        async function addPromoCode() {
             const codeInput = document.getElementById('promo-code-input');
             const discountInput = document.getElementById('promo-discount-input');
             
@@ -342,30 +372,33 @@
                 return;
             }
 
-            if (promoCodes.some(p => p.code === code)) {
-                alert('Bu kod zaten mevcut.');
+            const { error } = await supabaseClient
+                .from('promos')
+                .insert([{ code, discount }]);
+
+            if (error) {
+                if (error.code === '23505') alert('Bu kod zaten mevcut.');
+                else console.error('Add promo error:', error);
                 return;
             }
-
-            promoCodes.push({
-                id: crypto.randomUUID(), // Add a unique ID for potential future use
-                code: code,
-                discount: discount,
-                createdAt: new Date().toISOString()
-            });
-
-            localStorage.setItem('hisarfitcamp_promos', JSON.stringify(promoCodes));
             
             codeInput.value = '';
             discountInput.value = '';
-            renderPromotions();
+            fetchPromos();
         }
 
-        function deletePromoCode(index) {
+        async function deletePromoCode(promoId) {
             if (confirm('Bu promosyon kodunu silmek istediğinize emin misiniz?')) {
-                promoCodes.splice(index, 1);
-                localStorage.setItem('hisarfitcamp_promos', JSON.stringify(promoCodes));
-                renderPromotions();
+                const { error } = await supabaseClient
+                    .from('promos')
+                    .delete()
+                    .eq('id', promoId);
+
+                if (error) {
+                    console.error('Delete promo error:', error);
+                    return;
+                }
+                fetchPromos();
             }
         }
 
@@ -376,7 +409,7 @@
             dashboard.style.display = 'none';
             document.getElementById('detail-view').style.display = 'block';
 
-            const dateObj = new Date(app.date);
+            const dateObj = new Date(app.date || app.created_at);
             document.getElementById('detail-date').innerText = dateObj.toLocaleDateString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute:'2-digit' });
 
             const content = document.getElementById('detail-content');
@@ -453,7 +486,7 @@
             `;
         }
 
-        // Basic sanitizer to prevent xss stored in localStorage
+        // Basic sanitizer to prevent xss
         function sanitizeHTML(str) {
             if (!str) return '';
             const temp = document.createElement('div');
@@ -461,5 +494,6 @@
             return temp.innerHTML;
         }
     </script>
+
 </body>
 </html>

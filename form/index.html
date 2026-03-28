@@ -324,14 +324,13 @@
                                 <a href="/" class="btn btn-secondary mt-4" style="margin-top: var(--spacing-md);">Ana Sayfaya Dön</a>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-        <div id="footer-placeholder"></div>
-    </div>
-    <script type="module" src="/src/main.js"></script>
+                      <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
+        // Supabase Configuration
+        const SUPABASE_URL = 'https://scabaoarvsanovagpomr.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjYWJhb2FydnNhbm92YWdwb21yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2OTE2MTksImV4cCI6MjA5MDI2NzYxOX0.c-qunJjpgpsl_YYGW6UIxlmV18j9OaCiLysnuyBt0Gw';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
         document.addEventListener('DOMContentLoaded', () => {
              const nextInput = document.getElementById('next-redirect');
             if (nextInput) {
@@ -494,8 +493,8 @@
 
             paymentMethodSelect.addEventListener('change', updatePriceSummary);
 
-            // Promo Logic
-            document.getElementById('apply-promo').addEventListener('click', () => {
+            // Promo Logic using Supabase
+            document.getElementById('apply-promo').addEventListener('click', async () => {
                 const code = document.getElementById('promo_code').value.trim().toUpperCase();
                 const msg = document.getElementById('promo-message');
                 
@@ -506,12 +505,15 @@
                     return;
                 }
 
-                const promos = JSON.parse(localStorage.getItem('hisarfitcamp_promos') || '[]');
-                const found = promos.find(p => p.code === code);
+                const { data, error } = await supabaseClient
+                    .from('promos')
+                    .select('*')
+                    .eq('code', code)
+                    .maybeSingle();
 
-                if (found) {
-                    appliedPromo = found;
-                    msg.innerText = `Tebrikler! %${found.discount} indirim uygulandı.`;
+                if (data) {
+                    appliedPromo = data;
+                    msg.innerText = `Tebrikler! %${data.discount} indirim uygulandı.`;
                     msg.style.color = "green";
                     msg.style.display = "block";
                 } else {
@@ -523,29 +525,25 @@
                 updatePriceSummary();
             });
 
-            // Save to localStorage for Admin Panel
             const applicationForm = document.getElementById('application-form');
             if (applicationForm) {
-                applicationForm.addEventListener('submit', (e) => {
-                    e.preventDefault(); // Varsayılan yönlendirmeyi iptal et
+                applicationForm.addEventListener('submit', async (e) => {
+                    e.preventDefault(); 
                     
                     const formData = new FormData(applicationForm);
                     
-                    // Generate full payload array for all participants
                     let participantsArray = [];
                     const count = parseInt(formData.get('kisi_sayisi') || '1');
                     for(let i=1; i<=count; i++) {
                         participantsArray.push(formData.get(`kisi${i}_ad_soyad`) + " (" + formData.get(`kisi${i}_sehir`) + ")");
                     }
 
-                    // Calculate final prices based on selected method
                     const paymentMethod = paymentMethodSelect.value;
                     const basePrice = paymentMethod === 'Kredi Kartı' ? selectedAccData.price_cc : selectedAccData.price_havale;
                     const discount = appliedPromo ? Math.round(basePrice * (appliedPromo.discount / 100)) : 0;
                     const finalTotal = basePrice - discount;
 
                     const appData = {
-                        id: Date.now().toString(36) + Math.random().toString(36).substring(2),
                         date: new Date().toISOString(),
                         name: formData.get('kisi1_ad_soyad'),
                         phone: formData.get('kisi1_telefon'),
@@ -556,23 +554,27 @@
                         participants: count,
                         other_participants: participantsArray.join(', '),
                         notes: formData.get('notlar') || '-',
-                        // Promo fields
                         promo_code: appliedPromo ? appliedPromo.code : null,
                         promo_discount: appliedPromo ? appliedPromo.discount : 0,
                         original_amount: basePrice,
                         total_amount: finalTotal
                     };
 
-                    const existingApps = JSON.parse(localStorage.getItem('hisarfitcamp_applications') || '[]');
-                    existingApps.push(appData);
-                    localStorage.setItem('hisarfitcamp_applications', JSON.stringify(existingApps));
+                    // Save to Supabase
+                    const { error } = await supabaseClient
+                        .from('applications')
+                        .insert([appData]);
 
-                    // Submit form via fetch (AJAX) to avoid redirect
+                    if (error) {
+                        console.error('Supabase application error:', error);
+                        // Still continue to FormSubmit for fallback email notification
+                    }
+
+                    // Submit form via fetch to FormSubmit for email backup
                     const submitBtn = applicationForm.querySelector('button[type="submit"]');
                     submitBtn.innerText = 'Gönderiliyor...';
                     submitBtn.disabled = true;
 
-                    // Append total amount to formData for FormSubmit notify
                     formData.append('toplam_tutar', finalTotal + " TL");
                     if (appliedPromo) formData.append('kullanilan_promo', appliedPromo.code + " (%"+appliedPromo.discount+" İndirim)");
 
@@ -586,8 +588,6 @@
                     .then(response => {
                         applicationForm.style.display = 'none';
                         document.getElementById('success-message').style.display = 'block';
-                        
-                        // En üste kaydır
                         window.scrollTo({
                             top: document.querySelector('.form-layout').offsetTop - 50,
                             behavior: 'smooth'
@@ -595,11 +595,9 @@
                     })
                     .catch(error => {
                         console.error('Submission error:', error);
-                        // Hata olsa bile kullanıcıya göster (Aktivasyon vs. sebebiyle)
                         applicationForm.style.display = 'none';
                         document.getElementById('success-message').style.display = 'block';
-                        
-                         window.scrollTo({
+                        window.scrollTo({
                             top: document.querySelector('.form-layout').offsetTop - 50,
                             behavior: 'smooth'
                         });
