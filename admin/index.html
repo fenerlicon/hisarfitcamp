@@ -378,7 +378,10 @@
 
             if (error) {
                 if (error.code === '23505') alert('Bu kod zaten mevcut.');
-                else console.error('Add promo error:', error);
+                else {
+                    console.error('Add promo error:', error);
+                    alert('Hata Oluştu: ' + error.message + ' (Kod: ' + error.code + ')');
+                }
                 return;
             }
             
