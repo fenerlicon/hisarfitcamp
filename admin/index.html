@@ -80,6 +80,7 @@
     <div id="auth-screen">
         <div class="auth-card">
             <h2>Yönetici Girişi</h2>
+            <input type="email" id="email" class="auth-input" placeholder="E-posta adresiniz" style="margin-bottom: 0.5rem;">
             <input type="password" id="password" class="auth-input" placeholder="Şifrenizi girin">
             <button class="auth-btn" id="login-btn">Giriş Yap</button>
             <p id="auth-error">Hatalı şifre. Lütfen tekrar deneyin.</p>
@@ -201,29 +202,46 @@
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjYWJhb2FydnNhbm92YWdwb21yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2OTE2MTksImV4cCI6MjA5MDI2NzYxOX0.c-qunJjpgpsl_YYGW6UIxlmV18j9OaCiLysnuyBt0Gw';
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // Simple auth state
-        const ADMIN_PASSWORD = "ay&sk.2026"; 
+        // True Auth state via Supabase
         let appsData = [];
         let promoCodes = [];
 
         const authScreen = document.getElementById('auth-screen');
         const dashboard = document.getElementById('dashboard');
+        const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
         const loginBtn = document.getElementById('login-btn');
         const logoutBtns = document.querySelectorAll('.logout-btn');
         const authError = document.getElementById('auth-error');
 
-        // Check if already logged in this session
-        if (sessionStorage.getItem('hisar_admin_logged_in') === 'true') {
-            showDashboard();
-        }
+        // Check current session
+        supabaseClient.auth.getSession().then(({ data: { session } }) => {
+            if (session) showDashboard();
+        });
 
-        loginBtn.addEventListener('click', () => {
-            if (passwordInput.value === ADMIN_PASSWORD) {
-                sessionStorage.setItem('hisar_admin_logged_in', 'true');
-                showDashboard();
-            } else {
+        supabaseClient.auth.onAuthStateChange((event, session) => {
+            if (event === 'SIGNED_OUT') {
+                dashboard.style.display = 'none';
+                authScreen.style.display = 'flex';
+            }
+        });
+
+        loginBtn.addEventListener('click', async () => {
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+            
+            loginBtn.innerText = "Giriş Yapılıyor...";
+            const { data, error } = await supabaseClient.auth.signInWithPassword({
+                email, password
+            });
+
+            if (error) {
+                authError.innerText = "Giriş başarısız. Bilgilerinizi kontrol edin.";
                 authError.style.display = 'block';
+                loginBtn.innerText = "Giriş Yap";
+            } else {
+                showDashboard();
+                loginBtn.innerText = "Giriş Yap";
             }
         });
 
@@ -233,12 +251,11 @@
         });
 
         logoutBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                sessionStorage.removeItem('hisar_admin_logged_in');
+            btn.addEventListener('click', async () => {
+                await supabaseClient.auth.signOut();
+                emailInput.value = '';
                 passwordInput.value = '';
                 authError.style.display = 'none';
-                dashboard.style.display = 'none';
-                authScreen.style.display = 'flex';
             });
         });
 
