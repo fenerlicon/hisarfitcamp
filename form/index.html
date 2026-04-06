@@ -495,7 +495,7 @@
 
             // Promo Logic using Supabase
             document.getElementById('apply-promo').addEventListener('click', async () => {
-                const code = document.getElementById('promo_code').value.trim().toUpperCase();
+                const code = document.getElementById('promo_code').value.replace(/\s+/g, '').toUpperCase();
                 const msg = document.getElementById('promo-message');
                 
                 if (!code) {

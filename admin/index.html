@@ -364,7 +364,7 @@
             const codeInput = document.getElementById('promo-code-input');
             const discountInput = document.getElementById('promo-discount-input');
             
-            const code = codeInput.value.trim().toUpperCase();
+            const code = codeInput.value.replace(/\s+/g, '').toUpperCase();
             const discount = parseInt(discountInput.value);
 
             if (!code || !discount) {
