@@ -80,12 +80,13 @@
     <div id="auth-screen">
         <div class="auth-card">
             <h2>Yönetici Girişi</h2>
-            <input type="password" id="password" class="auth-input" placeholder="Şifrenizi girin" style="margin-top: 1rem;">
+            <input type="email" id="email" class="auth-input" placeholder="E-posta adresiniz" style="margin-bottom: 0.5rem; margin-top: 1rem;">
+            <input type="password" id="password" class="auth-input" placeholder="Şifrenizi girin">
             <button class="auth-btn" id="login-btn">Giriş Yap</button>
             <div style="margin-top: 1rem;">
                 <a href="#" id="forgot-password" style="font-size: 0.85rem; color: #64748b; text-decoration: none;">Şifremi Unuttum</a>
             </div>
-            <p id="auth-error">Hatalı şifre. Lütfen tekrar deneyin.</p>
+            <p id="auth-error">Hatalı bilgiler. Lütfen tekrar deneyin.</p>
             <p id="auth-success" style="color: #166534; margin-top: 1rem; font-size: 0.9rem; display: none;"></p>
         </div>
     </div>
@@ -211,15 +212,13 @@
 
         const authScreen = document.getElementById('auth-screen');
         const dashboard = document.getElementById('dashboard');
+        const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
         const loginBtn = document.getElementById('login-btn');
         const forgotPasswordBtn = document.getElementById('forgot-password');
         const logoutBtns = document.querySelectorAll('.logout-btn');
         const authError = document.getElementById('auth-error');
         const authSuccess = document.getElementById('auth-success');
-        
-        // Fixed Admin Email
-        const ADMIN_EMAIL = 'aslanbasardafurkan@gmail.com';
 
         // Check current session
         supabaseClient.auth.getSession().then(({ data: { session } }) => {
@@ -234,22 +233,23 @@
         });
 
         loginBtn.addEventListener('click', async () => {
+            const email = emailInput.value.trim();
             const password = passwordInput.value;
             
-            if (!password) {
-                authError.innerText = "Lütfen şifrenizi girin.";
+            if (!email || !password) {
+                authError.innerText = "Lütfen tüm alanları doldurun.";
                 authError.style.display = 'block';
                 return;
             }
 
             loginBtn.innerText = "Giriş Yapılıyor...";
             const { data, error } = await supabaseClient.auth.signInWithPassword({
-                email: ADMIN_EMAIL, 
+                email, 
                 password
             });
 
             if (error) {
-                authError.innerText = "Hatalı şifre. Lütfen tekrar deneyin.";
+                authError.innerText = "Hatalı e-posta veya şifre.";
                 authError.style.display = 'block';
                 loginBtn.innerText = "Giriş Yap";
             } else {
@@ -265,11 +265,18 @@
 
         forgotPasswordBtn.addEventListener('click', async (e) => {
             e.preventDefault();
+            const email = emailInput.value.trim();
+            if (!email) {
+                authError.innerText = "Şifre sıfırlamak için önce e-posta adresinizi yazın.";
+                authError.style.display = 'block';
+                return;
+            }
+
             authError.style.display = 'none';
             authSuccess.style.display = 'none';
             
             forgotPasswordBtn.innerText = "Gönderiliyor...";
-            const { error } = await supabaseClient.auth.resetPasswordForEmail(ADMIN_EMAIL, {
+            const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
                 redirectTo: window.location.origin + '/admin/index.html',
             });
 
