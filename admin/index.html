@@ -24,7 +24,7 @@
         .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
         
         /* Auth Screen */
-        #auth-screen { display: none; align-items: center; justify-content: center; min-height: 100vh; }
+        #auth-screen { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
         .auth-card { background: var(--color-white); padding: 3rem; border-radius: var(--radius-md); box-shadow: var(--shadow-md); text-align: center; width: 100%; max-width: 400px; }
         .auth-card h2 { margin-bottom: 2rem; color: var(--color-primary); }
         .auth-input { width: 100%; padding: 12px; margin-bottom: 1rem; border: 1px solid var(--color-border); border-radius: 6px; font-family: inherit; font-size: 1rem; }
@@ -33,7 +33,7 @@
         #auth-error { color: #e11d48; margin-top: 1rem; font-size: 0.9rem; display: none; }
 
         /* Dashboard */
-        #dashboard { display: block; }
+        #dashboard { display: none; }
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 2px solid var(--color-border); }
         .header h1 { color: var(--color-primary); }
         .logout-btn { padding: 8px 16px; background: transparent; color: #e11d48; border: 2px solid #e11d48; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.3s; }
@@ -80,14 +80,9 @@
     <div id="auth-screen">
         <div class="auth-card">
             <h2>Yönetici Girişi</h2>
-            <input type="email" id="email" class="auth-input" placeholder="E-posta adresiniz" style="margin-bottom: 0.5rem; margin-top: 1rem;">
-            <input type="password" id="password" class="auth-input" placeholder="Şifrenizi girin">
+            <input type="password" id="password" class="auth-input" placeholder="Şifrenizi girin" style="margin-top: 1rem;">
             <button class="auth-btn" id="login-btn">Giriş Yap</button>
-            <div style="margin-top: 1rem;">
-                <a href="#" id="forgot-password" style="font-size: 0.85rem; color: #64748b; text-decoration: none;">Şifremi Unuttum</a>
-            </div>
-            <p id="auth-error">Hatalı bilgiler. Lütfen tekrar deneyin.</p>
-            <p id="auth-success" style="color: #166534; margin-top: 1rem; font-size: 0.9rem; display: none;"></p>
+            <p id="auth-error">Hatalı şifre. Lütfen tekrar deneyin.</p>
         </div>
     </div>
 
@@ -212,95 +207,34 @@
 
         const authScreen = document.getElementById('auth-screen');
         const dashboard = document.getElementById('dashboard');
-        const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
         const loginBtn = document.getElementById('login-btn');
-        const forgotPasswordBtn = document.getElementById('forgot-password');
         const logoutBtns = document.querySelectorAll('.logout-btn');
         const authError = document.getElementById('auth-error');
-        const authSuccess = document.getElementById('auth-success');
 
-        // Check current session
-        // Bypass for now as requested
-        showDashboard();
-        
-        /*
-        supabaseClient.auth.getSession().then(({ data: { session } }) => {
-            if (session) showDashboard();
-        });
+        // Check local storage for session
+        if (localStorage.getItem('admin_auth') === 'true') {
+            showDashboard();
+        }
 
-        supabaseClient.auth.onAuthStateChange((event, session) => {
-            if (event === 'SIGNED_OUT') {
-                dashboard.style.display = 'none';
-                authScreen.style.display = 'flex';
-            }
-        });
-        */
-
-        loginBtn.addEventListener('click', async () => {
-            const email = emailInput.value.trim();
+        loginBtn.addEventListener('click', () => {
             const password = passwordInput.value;
-            
-            if (!email || !password) {
-                authError.innerText = "Lütfen tüm alanları doldurun.";
-                authError.style.display = 'block';
-                return;
-            }
+            const CORRECT_PASSWORD = 'ay&sk.2026';
 
-            loginBtn.innerText = "Giriş Yapılıyor...";
-            const { data, error } = await supabaseClient.auth.signInWithPassword({
-                email, 
-                password
-            });
-
-            if (error) {
-                authError.innerText = "Hatalı e-posta veya şifre.";
-                authError.style.display = 'block';
-                loginBtn.innerText = "Giriş Yap";
-            } else {
+            if (password === CORRECT_PASSWORD) {
+                localStorage.setItem('admin_auth', 'true');
                 showDashboard();
-                loginBtn.innerText = "Giriş Yap";
+            } else {
+                authError.style.display = 'block';
+                authError.innerText = "Hatalı şifre. Lütfen tekrar deneyin.";
             }
         });
 
         // Add Enter key support
-        passwordInput.addEventListener('keypress', (e) => {
-            if(e.key === 'Enter') loginBtn.click();
-        });
-
-        forgotPasswordBtn.addEventListener('click', async (e) => {
-            e.preventDefault();
-            const email = emailInput.value.trim();
-            if (!email) {
-                authError.innerText = "Şifre sıfırlamak için önce e-posta adresinizi yazın.";
-                authError.style.display = 'block';
-                return;
-            }
-
-            authError.style.display = 'none';
-            authSuccess.style.display = 'none';
-            
-            forgotPasswordBtn.innerText = "Gönderiliyor...";
-            const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
-                redirectTo: window.location.origin + '/admin/index.html',
-            });
-
-            if (error) {
-                authError.innerText = "Hata: " + error.message;
-                authError.style.display = 'block';
-                forgotPasswordBtn.innerText = "Şifremi Unuttum";
-            } else {
-                authSuccess.innerText = "Şifre sıfırlama bağlantısı e-posta adresinize gönderildi.";
-                authSuccess.style.display = 'block';
-                forgotPasswordBtn.innerText = "Şifremi Unuttum";
-            }
-        });
-
         logoutBtns.forEach(btn => {
-            btn.addEventListener('click', async () => {
-                await supabaseClient.auth.signOut();
-                passwordInput.value = '';
-                authError.style.display = 'none';
+            btn.addEventListener('click', () => {
+                localStorage.removeItem('admin_auth');
+                location.reload();
             });
         });
 
