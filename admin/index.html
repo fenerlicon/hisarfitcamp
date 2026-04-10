@@ -80,8 +80,7 @@
     <div id="auth-screen">
         <div class="auth-card">
             <h2>Yönetici Girişi</h2>
-            <input type="email" id="email" class="auth-input" placeholder="E-posta adresiniz" style="margin-bottom: 0.5rem;">
-            <input type="password" id="password" class="auth-input" placeholder="Şifrenizi girin">
+            <input type="password" id="password" class="auth-input" placeholder="Şifrenizi girin" style="margin-top: 1rem;">
             <button class="auth-btn" id="login-btn">Giriş Yap</button>
             <p id="auth-error">Hatalı şifre. Lütfen tekrar deneyin.</p>
         </div>
@@ -208,11 +207,13 @@
 
         const authScreen = document.getElementById('auth-screen');
         const dashboard = document.getElementById('dashboard');
-        const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
         const loginBtn = document.getElementById('login-btn');
         const logoutBtns = document.querySelectorAll('.logout-btn');
         const authError = document.getElementById('auth-error');
+        
+        // Fixed Admin Email
+        const ADMIN_EMAIL = 'aslanbasardafurkan@gmail.com';
 
         // Check current session
         supabaseClient.auth.getSession().then(({ data: { session } }) => {
@@ -227,16 +228,22 @@
         });
 
         loginBtn.addEventListener('click', async () => {
-            const email = emailInput.value.trim();
             const password = passwordInput.value;
             
+            if (!password) {
+                authError.innerText = "Lütfen şifrenizi girin.";
+                authError.style.display = 'block';
+                return;
+            }
+
             loginBtn.innerText = "Giriş Yapılıyor...";
             const { data, error } = await supabaseClient.auth.signInWithPassword({
-                email, password
+                email: ADMIN_EMAIL, 
+                password
             });
 
             if (error) {
-                authError.innerText = "Giriş başarısız. Bilgilerinizi kontrol edin.";
+                authError.innerText = "Hatalı şifre. Lütfen tekrar deneyin.";
                 authError.style.display = 'block';
                 loginBtn.innerText = "Giriş Yap";
             } else {
@@ -253,7 +260,6 @@
         logoutBtns.forEach(btn => {
             btn.addEventListener('click', async () => {
                 await supabaseClient.auth.signOut();
-                emailInput.value = '';
                 passwordInput.value = '';
                 authError.style.display = 'none';
             });
